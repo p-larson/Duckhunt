@@ -1,0 +1,650 @@
+# •-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•
+# Duckhunt created by Peter Larson (Wowserman), in the Summer of 2016
+# •-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•-•
+#
+settings:
+  # Should the Plugin put out extra Plugin Information Messages on start-up?
+  plugin-info-message: true
+  # Should Players automatically rejoin a new game after playing one?
+  rejoin-after-game: true
+  # How many lives should the Players have?
+  lives: 3
+  # How long (in seconds) should the game take before the Hunters automatically win?
+  timer: 600
+  # Should a scoreboard be displayed while in-game?
+  scoreboard: true
+  # Should the Players be able to join games if they don't have a empty inventory?
+  # WARNING: If Enabled, Player's Inventories will be cleared before joining!
+  ignore-inventories: false
+  # What commands should be allowed while playing Duckhunt?
+  # (Besides Duckhunt Commands)
+  whitelisted-commands:
+  - 'fly'
+  - 'tp'
+  - 'broadcast'
+  - 'kick'
+  - 'ban'
+  - 'reload'
+  - 'stop'
+  messages:
+    # What should the prefix for all of the Chat messages be?
+    prefix: '&2DuckHunt &7>'
+    # Arena created Message
+    arena-created: '&a@Arena created Successfully!'
+    # Cannot Create Arena because it Already Exists Message
+    arena-already-exists: '&cCannot create Arena! @Arena already Exists!'
+    # What should the message be when the arena a player is trying to join doesn't exist?
+    arena-doesnt-exist-message: '&c@Arena doesnt Exist!'
+    # What should the message be when the arena a player is trying to spectate isn't in game? 
+    arena-isnt-in-game-message: '&c@Arena isnt In-Game!'
+    # What should the message be when the arena a player is trying to join is in game?
+    arena-is-in-game-message : '&c@Arena is In-Game!'
+    # What should the message be when the arena a player is trying to join isn't enabled?
+    arena-not-enabled-message: '&c@Arena isnt Enabled!'
+    # What should the message be when a Player uses /duckhunt autojoin and there is no good Arena to join?
+    no-good-arena-message: '&cThere are No Good Games to Join Right Now.'
+     # What should the message be when a Player uses /duckhunt autoconnect and there is no good Arena to connect to?
+    no-good-server-message: '&cThere are No Good Servers to Join Right Now.'
+    # What should the message be when a non-oped player tries to make a duckhunt sign? 
+    not-allowed-to-make-duckhunt-sign-message: 'Sorry, but you must be Opped to create DuckHunt Signs.'
+    # What should the message be when a player in-game trys to spectate a game?
+    player-cant-spectate-message: 'You Must leave the Game before Spectating!'
+    # What should the message be when a player cant do join a game but can spectate it
+    player-can-spectate-message: 'Spectate the game with /duckhunt spectate arena'
+    # What should the message be when a player is in game and tries to join a game?
+    player-is-in-game-cant-join-message: 'You cant join a game when your in-game already!'
+    # What should the message be when a player tries to join a game with items in their inventory?
+    player-cant-join-has-contents-in-inventory-message: 'You must have an Empty inventory to join!'
+    # What should the message be when a player tries to leave but isn't in a game?
+    player-cant-leave-not-in-game-message: 'You arent in a game!'
+    # What should the message be when a player becomes a spectator?
+    player-enter-spectator-mode-message: 'You are now in Spectator Mode for &d@Arena'
+    # What should the message be when a game ends and the players automatically rejoin?
+    player-auto-rejoin-message: '&aYou were automatically put into a new game.'
+    # What should the message be to inform the player they can leave when they autojoin a new game?
+    player-leave-after-rejoin-message: 'You can Leave with &c/duckhunt leave'
+    # What should the message be when a player joined a game (sent to everyone in that arena)?
+    join-message: '@Player joined the game.'
+    # What should the message be when a player quits (sent to everyone in that arena)?
+    quit-message: '@Player left the game.'
+    # What should the message be when a duck is killed?
+    duck-death-message: '@Player was killed!'
+    # What should the message be when a duck is out of lives?
+    duck-eliminated-message: '@Player is out of lives, and has been eliminated from the game!'
+    # What should the message be when a duck has 1 life left?
+    duck-last-life-message: 'You are now on your &dLast Life'
+    # What should the message be when a duck dies but has lives (more than 1)?   
+    duck-has-lives-message: 'You now have &d@Lives &7lives left.'
+    # What should the message be when a duck forcefully switches to hunters
+    duck-switch-to-hunter-message: '@Player is now a Hunter!'
+    # What should the message be when a duck finishes the course?
+    duck-finishes-course-message: '@Player finished the Course!'
+    # What should the message be when the Game has enough Players, and is counting down to start?
+    game-starting-soon-message: '&6Game will start in @StartingCountdownTimer seconds'
+    # What should the message be when a hunter leaves and the game tries to find a new hunter from
+    # the ducks team, but there aren't enough ducks for one to switch?
+    arena-has-no-eligible-hunters-message: 'There wasnt a eligible player to be a Hunter.'
+    # What should the message of the action-bar be when the game doesn't have enough players to start?
+    players-needed-actionbar: '&6@NeededPlayers more players until the game starts!'
+    # What should the message of the action-bar be when there is enough players to start?
+    has-needed-players: '&6Game Starting Soon'
+    # What should the message be when a Duck didn't choose a class?
+    duck-didnt-choose-class-message: 'You didnt choose a Class, so you have been Equiped with the Runners Class.'
+    # What should the message be when a Hunter didn't choose a Class?
+    hunter-didnt-choose-class-message: 'You didnt choose a Class, so you have been Equiped with the Cyborg Class.'
+    # What should the message be when a player doesn't have permission to use a kit?
+    player-lacks-permission-for-kit-message: '&3You dont have Permission to use this Class!'
+    # What should the message be when a player in-game trys to use a command that isn't related to duckhunt?
+    player-ingame-uses-non-duckhunt-command-message: 'You cannot use this command while in game!'
+    # What should the message of the title be when the starting countdown is canceled?
+    countdown-canceled-title: '&6Countdown Canceled'
+    # What should the message of the sub-title be when the starting countdown is canceled?
+    countdown-canceled-subtitle: '@NeededPlayers more players until the game starts!'
+    # What should the message be when a Player uses /duckhunt forcestart (arena) and it can't
+    # Start the game?
+    player-cant-start-arena: 'Cannot Start Arena, the Arena is In-Game.'
+    # What should the message be when a Player changes their Team Preference to the Ducks?
+    player-prefer-ducks: 'You Changed your Team Preference to the &2Ducks'
+    # What should the message be when a Player changes their Team Preference to No Preference?
+    player-prefer-nopreference: 'You Changed your Team Preference to be &eNonpreferential.'
+    # What should the message be when a Player changes their Team Preference to the Hunters?
+    player-prefer-hunters: 'You Changed your Team Preference to the &cHunters'
+    # What should the messages be when the game ends?
+    end-messages:
+    - '&ewinningteam &b has won the game!'
+    # What should the message be when a duck starts?
+    duck-start-messages:
+    - '&e&oYour a Duck!'
+    - '&e&oFinish the Course and'
+    - '&e&oKill the Hunters to Win!'
+    - '&e&oYou have &5@Lives &e&olives!'   
+    # What should the message be when a hunter starts?
+    hunter-start-messages:
+    - '&e&oYour a Hunter!'
+    - '&e&oStop the Ducks from finishing'
+    - '&e&othe Course by Killing them all.'
+    - '&e&oAfter theyre all dead you Win!'
+    # What should the message be when a duck equips the Runner class?
+    equip-runner-messages:
+    - '&aYou Equipped Runner'
+    - '&eImmune to Slowness Sponges'
+    - '&eGains Permenent Speed I'
+    # What should the message be when a duck equips the Healer class?
+    equip-healer-messages:
+    - '&aYou Equipped Healer' 
+    - '&eHeal others with the Heal Wand'
+    - '&eGains Permanent Regeneration I' 
+    - '&eGains Permanent Slowness I'
+    # What should the message be when a duck equips the Smoker class?
+    equip-smoker-messages:
+    - '&aYou Equipped Smoker'
+    - '&eThrow Smoke Grenades that'
+    - '&eProvide Cover and Last 5s'
+    - '&eHolds a Max of 2 Grenades'
+    - '&eReceives Grenades every 10s'
+    # What should the message be when a duck equips the Cloaker class?
+    equip-cloaker-messages:
+    - '&aYou Equipped Cloaker'
+    - '&eUse the Invisability Cloak to'
+    - '&eTemporarily go Invisable for 5s'
+    - '&eReceives Cloak every 30s'
+    # What should the message be when a hunter equips the Barrager class?
+    equip-barrager-messages:
+    - '&aYou Equipped Barrager'
+    - '&eHas Above Average Accuracy.'
+    - '&eDeals 2.0 Hearts of Damage'
+    - '&eHolds a Max of 12 Arrows'
+    - '&eReceives Arrows every 1s'
+    - '&eShoots a Barrage of Arrows'
+    # What should the message be when a hunter equips the Pyrotech class?
+    equip-pyrotech-messages:
+    - '&aYou Equipped Pyrotech'
+    - '&eHas Bad Accuracy'
+    - '&eDeals 7.5 Hearts of Damage'
+    - '&eHolds a Max of 3 Arrows'
+    - '&eReceives Arrows every 6s'
+    - '&eDeals Splash Damage'
+    # What should the message be when a hunter equips the Freezer class?
+    equip-freezer-messages:
+    - '&aYou Equipped Freezer'
+    - '&eHas Great Accuracy'
+    - '&eDeals 5.0 Hearts of Damage'
+    - '&eHolds a Max of 6 Arrows'
+    - '&eReceives Arrows every 1s'
+    - '&eArrows Freeze Players'
+    # What should the message be when a hunter equips the Cyborg class?
+    equip-cyborg-messages:
+    - '&aYou Equipped Cyborg'
+    - '&eShoots Lasers!'
+    - '&eHas Perfect Accuracy'
+    - '&eDeals 5.0 Hearts of Damage'
+    - '&eHolds a Max of 3 Arrows'
+    - '&eReceives Arrows every 2s'
+    # Messages to help Players with Commands.
+    help:
+      # When a Non-Oped Player uses /duckhunt, what information should be presented?
+      default-messages:
+      - 'Help'
+      - '/duckhunt join (arena)'
+      - '/duckhunt leave (arena)'
+      - '/duckhunt list'
+      # Whena Oped Player uses /duckhunt, what extra information should be
+      # presented besides the default information?
+      op-messages:
+      - 'Help'
+      - '/duckhunt join (arena)'
+      - '/duckhunt leave (arena)'
+      - '/duckhunt list'
+      - '/duckhunt create (arena)'
+      - '/duckhunt edit (arena)'
+      - '/duckhunt info (arena)'
+      - '/duckhunt delete (arena)'
+      - '/duckhunt forcestart (arena)'
+      - '/duckhunt savebook'
+      - '/duckhunt setlobby'
+      - '/duckhunt autojoin'
+      - '/duckhunt autoconnect'
+      # When the Player uses /duckhunt join wrongly, what should the help message be?
+      join: 'Usage: /duckhunt join (arena)'
+      # When the Player uses /duckhunt spectate wrongly, what should the help message be?
+      spectate: 'Usage: /duckhunt spectate (arena)'
+  rewards:
+    win-rewards:
+      # What commands should the winners be forced to run?
+      commands:
+      - 'say Im a Winner!'
+      # What commands should the console be forced to run for the winners?
+      console-commands:
+      - 'eco give player 250'
+      # What messages should be sent to the winners?
+      messages:
+      - 'Enjoy your Rewards!'
+    loose-rewards:
+      # What commands should the winners be forced to run?
+      commands:
+      - 'say Im a Loser!'
+      # What commands should the console be forced to run for the winners?
+      console-commands:
+      - 'eco take player 250'
+      # What messages should be sent to the winners?
+      messages:
+      - 'Enjoy your Rewards!'
+  duck-class-selector:
+    # What should the name of the menu be for the duck class selector?
+    menu-name: '&2Ducks Class Selector'
+    runner:
+      # What Item ID should the Runner's Icon be?
+      item-id: 414
+      # What Data Value should the Runner's Icon be? (This is for colored glass, clay, etc)
+      data-value: 0 
+      # What should the display name of the Runner's Icon be?
+      display-name: '&bRunner'
+      # What should the lores of the Runner's Icon be?
+      lores:
+    healer:
+      # What Item ID should the Healer's Icon be?
+      item-id: 382
+      # What Data Value should the Healer's Icon be? (This is for colored glass, clay, etc)
+      data-value: 0 
+      # What should the display name of the Healer's Icon be?
+      display-name: '&aHealer'
+      # What should the lores of the Healer's Icon be?
+      lores:
+      - '&5Use your Melon Wand'
+      - '&5to Heal other Players!'
+      - '&5Permenant Slowness 1'
+      - '&5and Regeneration 1.'
+    smoker:
+      # What Item ID should the Smoker's Icon be?
+      item-id: 287
+      # What Data Value should the Smoker's Icon be? (This is for colored glass, clay, etc)
+      data-value: 0 
+      # What should the display name of the Smoker's Icon be?
+      display-name: '&7Smoker'
+      # What should the lores of the Smoker's Icon be?
+      lores:
+      - '&5Throws Smoke Grenades for Cover!'
+      - '&5Receive Smoke Grenades every 15s'
+      - '&5Smoke Grenades last 10s'
+      - '&5Can hold 2 at a time.'
+    cloaker:
+      # What Item ID should the Runner's Icon be?
+      item-id: 376
+      # What Data Value should the Runner's Icon be? (This is for colored glass, clay, etc)
+      data-value: 0 
+      # What should the display name of the Runner's Icon be?
+      display-name: '&fInvisability Cloak'
+      # What should the lores of the Runner's Icon be?
+      lores:
+      - '&5Temporarily turn yourself Invisable!'
+      - '&5Well, Not completly invisable...'
+      - '&5but, pretty invisable.'
+      - '&5like I wouldnt be able to see you,'
+      - '&5just your pants.'
+      - '&5Last 5s.'
+      - '&5Receives Cloak every 30 seconds.'
+  hunter-class-selector:
+    # What should the name of the menu be for the duck class selector?
+    menu-name: '&4Hunter Class Selector'
+    cyborg:
+      # What Item ID should the Runner's Icon be?
+      item-id: 338
+      # What Data Value should the Runner's Icon be? (This is for colored glass, clay, etc)
+      data-value: 0 
+      # What should the display name of the Runner's Icon be?
+      display-name: '&eCyborg'
+      # What should the lores of the Runner's Icon be?
+      lores:
+      - '&5Shoot Lasers instead of regular Arrows!'
+      - '&5Receive Energy every 3 Seconds'
+      - '&5Laser deals 5 Hearts of Damage'
+      - '&5Holds a Max of 5 Energy'
+    barrager:
+      # What Item ID should the Healer's Icon be?
+      item-id: 262
+      # What Data Value should the Healer's Icon be? (This is for colored glass, clay, etc)
+      data-value: 0 
+      # What should the display name of the Healer's Icon be?
+      display-name: '&6Barrager'
+      # What should the lores of the Healer's Icon be?
+      lores:
+      - '&5Shoot a Barrage of Arrows.'
+      - '&5Receive Arrows every 2 Seconds.'
+      - '&5Arrows Deal 2 Hearts of Damage'
+      - '&5Holds a Max of 12 Arrows'
+    pyrotech:
+      # What Item ID should the Smoker's Icon be?
+      item-id: 385
+      # What Data Value should the Smoker's Icon be? (This is for colored glass, clay, etc)
+      data-value: 0 
+      # What should the display name of the Smoker's Icon be?
+      display-name: '&4Pyrotech'
+      # What should the lores of the Smoker's Icon be?
+      lores:
+      - '&5Shoot Fireballs instead of Arrows!'
+      - '&5Receive Explosive Arrows every 6s.'
+      - '&5Holds a Max of 3 Arrows'
+    freezer:
+      # What Item ID should the Runner's Icon be?
+      item-id: 370
+      # What Data Value should the Runner's Icon be? (This is for colored glass, clay, etc)
+      data-value: 0 
+      # What should the display name of the Runner's Icon be?
+      display-name: '&fFreezer'
+      # What should the lores of the Runner's Icon be?
+      lores:
+      - '&5Shoow Arrows that temporarily'
+      - '&5Freeze the Target. The Target'
+      - '&5cannot move for 3s.'
+      - '&5Receives Arrows every 1s.'
+      - '&5Holds a Max of 6 Arrows.'
+  game-items:
+    # These Items are for the Special Items for Classes.
+    # Note: You can change what the Item is but you cannot change the Item's Ability.
+    runner-items:
+      speed-feather:
+        # What Item ID should the Speed Feather be?
+        item-id: 288
+        # What Data Value should the Speed Feather be? (This is for colored glass, clay, etc)
+        data-value: 0 
+        # What should the display name of the Speed Feather be?
+        display-name: '&oSpeed Feather'
+        # What should the lores of the Speed Feather be?
+        lores:
+        - '&5Use the Feather to go Super Fast!'
+        - '&5Lasts 3s.'
+        - '&5Refilled every 15s.'
+        - '&5Hold a Max of 3.'
+    healer-items:
+      healing-wand:
+        # What Item ID should the Healing Wand be?
+        item-id: 382
+        # What Data Value should the Healing Wand be? (This is for colored glass, clay, etc)
+        data-value: 0 
+        # What should the display name of the Healing Wand be?
+        display-name: '&eHealing Wand'
+        # What should the lores of the Healing Wand be?
+        lores:
+        - '&5Use the Wand on Team-Mates to Heal them.'
+    smoker-items:
+      smoke-grenade:
+        # What Item ID should the Smoke Grenade be?
+        item-id: 332
+        # What Data Value should the Smoke Grenade be? (This is for colored glass, clay, etc)
+        data-value: 0 
+        # What should the display name of the Smoke Grenade be?
+        display-name: '&7Smoke Grenade'
+        # What should the lores of the Smoke Grenade be?
+        lores:
+        - '&5Throw Smoke Grenades for Cover!'
+        - '&5Lasts 3s.'
+        - '&5Refilled every 20s.'
+        - '&5Hold a Max of 1.'
+    cloaker-items:
+      invisibility-cloak:
+        # What Item ID should the Invisibility Cloak be?
+        item-id: 299
+        # What Data Value should the Smoke Grenade be? (This is for colored glass, clay, etc)
+        data-value: 0 
+        # What should the display name of the Smoke Grenade be?
+        display-name: '&fInvisibility Cloak'
+        # What should the lores of the Smoke Grenade be?
+        lores:
+        - '&5Turn Completely Invisible!'
+        - '&5Lasts 5s.'
+        - '&5Refilled every 30s.'
+        - '&5Hold a Max of 1.'
+    cyborg-items:
+      plasma:
+        # What Item ID should the Invisibility Cloak be?
+        item-id: 351
+        # What Data Value should the Smoke Grenade be? (This is for colored glass, clay, etc)
+        data-value: 6
+        # What should the display name of the Smoke Grenade be?
+        display-name: '&3Plasma'
+        # What should the lores of the Smoke Grenade be?
+        lores:
+        - '&5Fuels Laser Gun.'
+        - '&5Refilled every 5s.'
+        - '&5Hold a Max of 5.'
+      laser-gun:
+        # What Item ID should the Invisibility Cloak be?
+        item-id: 338
+        # What Data Value should the Smoke Grenade be? (This is for colored glass, clay, etc)
+        data-value: 0
+        # What should the display name of the Smoke Grenade be?
+        display-name: '&4Laser Gun'
+        # What should the lores of the Smoke Grenade be?
+        lores:
+        - '&5Shoot Lasers!'
+        - '&5Costs 1 Plasma'
+        - '&5Deals 5 Hearts'
+    pyrotech-items:
+      fireball:
+        # What Item ID should the Invisibility Cloak be?
+        item-id: 385
+        # What Data Value should the Smoke Grenade be? (This is for colored glass, clay, etc)
+        data-value: 0
+        # What should the display name of the Smoke Grenade be?
+        display-name: '&4Fireball'
+        # What should the lores of the Smoke Grenade be?
+        lores:
+        - '&5Throw a Fireball!'
+        - '&5Refilled every 4s.'
+        - '&5Hold a Max of 3.'
+        - '&5Deals 7.5 Hearts'
+    barrager-items:
+      rusty-bow:
+        # What Item ID should the Invisibility Cloak be?
+        item-id: 261
+        # What Data Value should the Smoke Grenade be? (This is for colored glass, clay, etc)
+        data-value: 0
+        # What should the display name of the Smoke Grenade be?
+        display-name: '&6Rusty Bow'
+        # What should the lores of the Smoke Grenade be?
+        lores:
+        - '&5Just a Rusty Bow,'
+        - '&5That can Shoot 5-40 Arrows each shot.'
+        - '&5(The More Rusty Arrows the more Shot)'
+        - '&5Deals 2 Hearts each Arrow.'
+      rusty-arrow:
+        # What Item ID should the Invisibility Cloak be?
+        item-id: 262
+        # What Data Value should the Smoke Grenade be? (This is for colored glass, clay, etc)
+        data-value: 0
+        # What should the display name of the Smoke Grenade be?
+        display-name: '&6Rusty Arrow'
+        # What should the lores of the Smoke Grenade be?
+        lores:
+        - '&5Refilled every 1s.'
+        - '&5Hold a Max of 8.'
+    freezer-items:
+      snowball:
+        # What Item ID should the Invisibility Cloak be?
+        item-id: 332
+        # What Data Value should the Smoke Grenade be? (This is for colored glass, clay, etc)
+        data-value: 0
+        # What should the display name of the Smoke Grenade be?
+        display-name: '&fSnowball'
+        # What should the lores of the Smoke Grenade be?
+        lores:
+        - 'Throw Infinite Snowballs!'
+        - 'Deals 1 Heart'
+      ice-pillar:
+        # What Item ID should the Invisibility Cloak be?
+        item-id: 79
+        # What Data Value should the Smoke Grenade be? (This is for colored glass, clay, etc)
+        data-value: 0
+        # What should the display name of the Smoke Grenade be?
+        display-name: '&9Ice Pillar'
+        # What should the lores of the Smoke Grenade be?
+        lores:
+        - '&5Summon a Pillar of Ice.'
+        - '&5Connect Pillars together to'
+        - '&5Create Ice walls to Imprison Players.'
+        - '&5Lasts for 10s'
+        - '&5Refilled every 5s.'
+        - '&5Hold a Max of 5.'
+  scoreboards:
+    recruiting:
+    - '&b&lArena:'
+    - '@Arena'
+    - '@EmptyLine'
+    - '&6&lWaiting For Players'
+    - '(@PlayerCount/@MaxPlayers)'
+    - '@EmptyLine'
+    - '&a&lNeeded Players'
+    - '@NeededPlayers'
+    - '@EmptyLine'
+    - '&9&lPrefered Team:' 
+    - '@PreferedTeam'
+    starting:
+    - '&b&lArena'
+    - '@Arena'
+    - '@EmptyLine'
+    - '&6&lStarting In'
+    - '@StartingCountdownTimer'
+    - '@EmptyLine'
+    - '&b&lPlayers'
+    - '(@PlayerCount&f/@MaxPlayers&f)'
+    - '@EmptyLine'
+    - '&9&lPrefered Team:' 
+    - '@PreferedTeam'
+    ingame-ducks:
+    - '&b&lArena:'
+    - '@Arena'
+    - '@EmptyLine'
+    - '&6&lTime Left:'
+    - '@TimeLeft'
+    - '@EmptyLine'
+    - '&a&lLives'
+    - '@Lives'
+    - '@EmptyLine'
+    - '&c&lLast Death:'
+    - '@LastDuckDeath'
+    ingame-hunters:
+    - '&b&lArena:'
+    - '@Arena'
+    - '@EmptyLine'
+    - '&6&lTime Left:'
+    - '@TimeLeft'
+    - '@EmptyLine'
+    - '&c&lLast Killer:'
+    - '@LastDuckKiller'
+    ending-ducks-win:
+    - '&b&lArena:'
+    - '@Arena'
+    - '@EmptyLine'
+    - '&6&lWinning Team:'
+    - '@RandomColor@WinningTeam'
+    - '@EmptyLine'
+    - '&c&lDuck Finisher'
+    - '@DuckFinisher'
+    ending-hunters-win:
+    - '&b&lArena:'
+    - '@Arena'
+    - '@EmptyLine'
+    - '&6&lWinning Team:'
+    - '@RandomColor@WinningTeam'
+    - '@EmptyLine'
+    - '&c&lLast Hunter Kill'
+    - '@LastKiller'
+  lobby:
+    # Should players waiting in the game's lobby be given the book stored in /duckhunt savebook?
+    # (This is for if you want to give the Players joining a Tutorial of the Game)
+    book-enabled: true
+    # What slot should the book be put in? (1-9)
+    book-slot: 1
+    # Should players waiting in the game's lobby be given a item that they can use to leave?
+    # (This is just an easy way for players to leave, they can still use signs and commands to leave)
+    leave-item-enabled: true
+    leave-item:
+      # What should the item id of the leave item be?
+      item-id: 341
+      # What should the data value of the leave item be?
+      data-value: 0
+      # What should the display name of the leave item be?
+      display-name: '&cRight Click to Leave'
+      # What should the lores of the leave item be?
+      lores:
+      - 'Use this to Leave or'
+      - 'Use: /duckhunt leave'
+      # What slot should the Duck Selector be put in? (1-9)
+      # Make sure this Slot # is Unique.
+      item-slot: 9
+    # Right-Click the Duck-Selector to change your Team Preference.
+    duck-selector:
+      # What should the item id of the Duck Selector be?
+      item-id: 351
+      # What should the data value of the Duck Selector be?
+      data-value: 10
+      # What should the display name of the Duck Selector be?
+      display-name: 'Prefer to Play as a &aDuck'
+      # What should the lores of the Duck Selector be?
+      lores:
+      - 'Use this to Change'
+      - 'Your Team Preference'
+      - 'To the Ducks.'
+      # What slot should the Duck Selector be put in? (1-9)
+      # Make sure this Slot # is Unique.
+      item-slot: 4
+     # Right-Click the NoPreference-Selector to change your Team Preference.
+    nopreference-selector:
+      # What should the item id of the NoPreference Selector be?
+      item-id: 351
+      # What should the data value of the NoPreference-Selector be?
+      data-value: 8
+      # What should the display name of the NoPreference-Selector be?
+      display-name: '&7No Preference &f&oon your Team'
+      # What should the lores of the NoPreference-Selector be?
+      lores:
+      - 'Use this to Change'
+      - 'Your Team Preference'
+      - 'To be Random.'
+      # What slot should the NoPreference-Selector be put in? (1-9)
+      # Make sure this Slot # is Unique.
+      item-slot: 4
+    # Right-Click the Duck-Selector to change your Team Preference.
+    hunter-selector:
+      # What should the item id of the Hunter Selector be?
+      item-id: 351
+      # What should the data value of the Hunter Selector be?
+      data-value: 1
+      # What should the display name of the Hunter Selector be?
+      display-name: 'Prefer to Play as a &cHunter'
+      # What should the lores of the Hunter Selector be?
+      lores:
+      - 'Use this to Change'
+      - 'Your Team Preference'
+      - 'To the Hunters.'
+      # What slot should the Duck Selector be put in? (1-9)
+      # Make sure this Slot # is Unique.
+      item-slot: 6
+    # Where should players go when they Quit, End a Game while rejoin-after-game is off,
+    # or the Server Restarts / or Reloads?
+    # Note: This will be ignored if Bungee-Mode send-after-end is enabled,
+    # While Bungee-Mode is still enabled.
+    fallback-location:
+      x: 0.5
+      y: 64.0
+      z: 0.5
+      world: world
+  bungeemode:
+    # Bungee-Mode for Duckhunt is a toggleable feature!
+    # Enabled this if you want to transfer players to different servers.
+    enabled: true
+    # Main Arena Name
+    main-arena: 'Blooming'
+    # When players connect and or are sent to this server should they automatically join a game?
+    auto-join-on-connect: true
+    # When a Game Ends, and rejoin-after-game is false, what Server should the Player sent to?
+    # (Server Name you set on your Bungeecord Server's Bungee config.yml file)
+    lobby-server: 'lobby'
+    # Should Players skip the Firework Celebration after their game ends?
+    skip-end-celebration: false
+    # Should the Server restart after the Game Ends?
+    # Note: This Plugin does not control how the server stops and starts back up.
+    # It uses the Server's Main Configuration File's Restart Script that you declare
+    # In the Spigot Server's actual Spigot.yml Configuration File, 
+    # If restart-after-game-ends is enabled it will follow that script.
+    restart-after-game-ends: false
