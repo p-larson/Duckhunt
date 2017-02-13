@@ -16,6 +16,9 @@ public class Config {
 
 	private static FileConfiguration configfile = Duckhunt.plugin.getConfig();
 
+	
+	// Test 
+	
 	public static Boolean infoMessage;
 	public static Boolean autoRejoin;
 	public static Integer lives;
