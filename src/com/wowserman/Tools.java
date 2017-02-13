@@ -35,13 +35,16 @@ public class Tools {
 		return minutes + extra + s;
 	}
 	
-	public static ItemStack itemFromSection(ConfigurationSection section, Arena arena, Player player) {
+	public static ItemStack itemFromSection(ConfigurationSection section, Arena arena, Player player, String perm) {
 		System.out.print(section==null);
 		int id = section.getInt("item-id");
 		int data = section.getInt("data-value");
 		String displayname = section.getString("display-name");
 		List<String> lores = section.getStringList("lores");
-		
+		if (perm!=null) {
+			if (player.hasPermission(perm)) lores.add(new Message(Config.classUnlockedTag, arena, player).getText());
+			else lores.add(new Message(Config.classLockedTag, arena, player).getText());
+		}
 		@SuppressWarnings("deprecation")
 		ItemStack item = new ItemStack(id, 1, (byte) data);
 		ItemMeta m = item.getItemMeta();

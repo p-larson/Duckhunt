@@ -45,8 +45,6 @@ settings:
     no-good-arena-message: '&cThere are No Good Games to Join Right Now.'
      # What should the message be when a Player uses /duckhunt autoconnect and there is no good Arena to connect to?
     no-good-server-message: '&cThere are No Good Servers to Join Right Now.'
-    # What should the message be when a non-oped player tries to make a duckhunt sign? 
-    not-allowed-to-make-duckhunt-sign-message: 'Sorry, but you must be Opped to create DuckHunt Signs.'
     # What should the message be when a player in-game trys to spectate a game?
     player-cant-spectate-message: 'You Must leave the Game before Spectating!'
     # What should the message be when a player cant do join a game but can spectate it
@@ -86,29 +84,28 @@ settings:
     arena-has-no-eligible-hunters-message: 'There wasnt a eligible player to be a Hunter.'
     # What should the message of the action-bar be when the game doesn't have enough players to start?
     players-needed-actionbar: '&6@NeededPlayers more players until the game starts!'
-    # What should the message of the action-bar be when there is enough players to start?
-    has-needed-players: '&6Game Starting Soon'
-    # What should the message be when a Duck didn't choose a class?
-    duck-didnt-choose-class-message: 'You didnt choose a Class, so you have been Equiped with the Runners Class.'
-    # What should the message be when a Hunter didn't choose a Class?
-    hunter-didnt-choose-class-message: 'You didnt choose a Class, so you have been Equiped with the Cyborg Class.'
-    # What should the message be when a player doesn't have permission to use a kit?
-    player-lacks-permission-for-kit-message: '&3You dont have Permission to use this Class!'
+    # What should the message be when a player tries to use a command or a class that they don't have permission for?
+    player-lacks-permission: "&cYou don't have Permission to Perform this Action!"
     # What should the message be when a player in-game trys to use a command that isn't related to duckhunt?
     player-ingame-uses-non-duckhunt-command-message: 'You cannot use this command while in game!'
     # What should the message of the title be when the starting countdown is canceled?
     countdown-canceled-title: '&6Countdown Canceled'
     # What should the message of the sub-title be when the starting countdown is canceled?
     countdown-canceled-subtitle: '@NeededPlayers more players until the game starts!'
-    # What should the message be when a Player uses /duckhunt forcestart (arena) and it can't
-    # Start the game?
-    player-cant-start-arena: 'Cannot Start Arena, the Arena is In-Game.'
+    # What should the message be when a Player tries to Force Stop an Arena but the Arena isn't In-Game?
+    player-cant-stop-arena-not-ingame: "Cannot Stop Arena, the Arena isn't In-Game."
+    # What should the message be when a Player tries to Force Start an Arena but the Arena is In-Game?
+    player-cant-start-arena-ingame: 'Cannot Start Arena, the Arena is In-Game.'
     # What should the message be when a Player changes their Team Preference to the Ducks?
     player-prefer-ducks: 'You Changed your Team Preference to the &2Ducks'
     # What should the message be when a Player changes their Team Preference to No Preference?
     player-prefer-nopreference: 'You Changed your Team Preference to be &eNonpreferential.'
     # What should the message be when a Player changes their Team Preference to the Hunters?
-    player-prefer-hunters: 'You Changed your Team Preference to the &cHunters'
+    player-prefer-hunters: 'You Changed your Team  Preference to the &cHunters'
+    # What should the Tag be for Unlocked Classes (Classes the Player has Permissions for)?
+    unlocked-tag: '&aUnlocked'
+    # What should the Tag be for Locked Classes (Classes the Player doesn't have Permissions for)?
+    locked-tag: '&cLocked'
     # What should the messages be when the game ends?
     end-messages:
     - '&ewinningteam &b has won the game!'

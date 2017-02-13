@@ -16,9 +16,6 @@ public class Config {
 
 	private static FileConfiguration configfile = Duckhunt.plugin.getConfig();
 
-	
-	// Test 
-	
 	public static Boolean infoMessage;
 	public static Boolean autoRejoin;
 	public static Integer lives;
@@ -27,10 +24,10 @@ public class Config {
 	public static String arenaAlreadyExists;
 	public static String prefix;
 	public static String arenaDoesntExist;
-	public static String arenaIsntInGameCantSpectate;
+	public static String arenaIsntInGameCantSpectate; // Arena isn't Ingame
 	public static String arenaNotEnabled;
-	public static String playerCantSpectatePlayerInGame;
-	public static String playerCantJoinButCanSpectate;
+	public static String playerIngameCantSpectate; // Ingame
+	public static String playerCantJoinButCanSpectate; // Join fail
 	public static String playerInGameCantJoin;
 	public static String playerCantJoinHasContentsInInventory;
 	public static String playerCantLeaveNotInGame;
@@ -48,15 +45,12 @@ public class Config {
 	public static String playerLeaveAfterRejoin;
 	public static String playerEnterSpectatorMode;
 	public static String playersNeeded;
-//	public static String hasNeededPlayers;
-//	public static String notAllowedToMakeDuckhuntSign;
-//	public static String duckDidntChooseKit;
-//	public static String hunterDidntChooseKit;
-//	public static String playerLacksPermissionForKit;
-//	public static String countdownCanceled;
-//	public static String countdownCanceledSub;
+	public static String playerLackingPermission;
+	public static String countdownCanceled;
+	public static String countdownCanceledSub;
 	public static String playerUseCommand;
-//	public static String playerCantStartArena;
+	public static String playerCantStartArenaIngame;
+	public static String playerCantStopArenaNotIngame;
 	public static String noGoodArenaAvalible;
 	public static String noGoodServerAvalible;
 	public static List<String> nonopHelp;
@@ -67,13 +61,13 @@ public class Config {
 	public static String preferNone;
 	public static String preferHunters;
 	public static Boolean ignoreInventories;
-//	public static List<String> endMessages;
-//	public static List<String> winCommands;
-//	public static List<String> winConsoleCommands;
+	public static List<String> endMessages;
+	public static List<String> winCommands;
+	public static List<String> winConsoleCommands;
 	public static List<String> winMessages;
-//	public static List<String> looseCommands;
-//	public static List<String> looseConsoleCommands;
-//	public static List<String> looseMessages;
+	public static List<String> looseCommands;
+	public static List<String> looseConsoleCommands;
+	public static List<String> looseMessages;
 	public static List<String> duckStartMessages;
 	public static List<String> hunterStartMessages;
 	public static List<String> equipBarrager;
@@ -103,84 +97,86 @@ public class Config {
 	public static boolean bungeeEnabled;
 	public static boolean bungeeAutoJoinGameOnConnect;
 	public static String bungeeLobbyServerName;	
-//	public static boolean bungeeSkipEndingCelebration;
-//	public static boolean bungeeRestartServerOnGameEnd;
+	public static boolean bungeeSkipEndingCelebration;
+	public static boolean bungeeRestartServerOnGameEnd;
+	public static String classUnlockedTag;
+	public static String classLockedTag;
 
 	public static ItemStack getLeaveItem(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("lobby").getConfigurationSection("leave-item"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("lobby").getConfigurationSection("leave-item"), arena, player, null);
 	}
 
 	public static ItemStack getDuckSelector(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("lobby").getConfigurationSection("duck-selector"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("lobby").getConfigurationSection("duck-selector"), arena, player, null);
 	}
 
 	public static ItemStack getNoPreferenceSelector(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("lobby").getConfigurationSection("nopreference-selector"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("lobby").getConfigurationSection("nopreference-selector"), arena, player, null);
 	}
 
 	public static ItemStack getHunterSelector(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("lobby").getConfigurationSection("hunter-selector"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("lobby").getConfigurationSection("hunter-selector"), arena, player, null);
 	}
 
 	public static ItemStack getSpeedFeather(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("runner-items").getConfigurationSection("speed-feather"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("runner-items").getConfigurationSection("speed-feather"), arena, player, null);
 	}
 
 	public static ItemStack getHealWand(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("healer-items").getConfigurationSection("healing-wand"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("healer-items").getConfigurationSection("healing-wand"), arena, player, null);
 	}
 
 	public static ItemStack getSmokeGrenade(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("smoker-items").getConfigurationSection("smoke-grenade"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("smoker-items").getConfigurationSection("smoke-grenade"), arena, player, null);
 	}
 
 	public static ItemStack getInvisibilityCloak(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("cloaker-items").getConfigurationSection("invisibility-cloak"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("cloaker-items").getConfigurationSection("invisibility-cloak"), arena, player, null);
 	}
 
 	public static ItemStack getPlasma(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("cyborg-items").getConfigurationSection("plasma"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("cyborg-items").getConfigurationSection("plasma"), arena, player, null);
 	}
 
 	public static ItemStack getLaserGun(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("cyborg-items").getConfigurationSection("laser-gun"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("cyborg-items").getConfigurationSection("laser-gun"), arena, player, null);
 
 	}
 
 	public static ItemStack getFireball(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("pyrotech-items").getConfigurationSection("fireball"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("pyrotech-items").getConfigurationSection("fireball"), arena, player, null);
 	}
 
 	public static ItemStack getRustyBow(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("barrager-items").getConfigurationSection("rusty-bow"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("barrager-items").getConfigurationSection("rusty-bow"), arena, player, null);
 	}
 
 	public static ItemStack getRustyArrow(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("barrager-items").getConfigurationSection("rusty-arrow"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("barrager-items").getConfigurationSection("rusty-arrow"), arena, player, null);
 	}
 
 	public static ItemStack getSnowball(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("freezer-items").getConfigurationSection("snowball"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("freezer-items").getConfigurationSection("snowball"), arena, player, null);
 	}
 
 	public static ItemStack getIcePillar(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("freezer-items").getConfigurationSection("ice-pillar"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("game-items").getConfigurationSection("freezer-items").getConfigurationSection("ice-pillar"), arena, player, null);
 	}
 
 	public static ItemStack getCyborgIcon(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("hunter-class-selector").getConfigurationSection("cyborg"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("hunter-class-selector").getConfigurationSection("cyborg"), arena, player, Permissions.Cyborg.getValue());
 	}
 
 	public static ItemStack getBarragerIcon(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("hunter-class-selector").getConfigurationSection("barrager"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("hunter-class-selector").getConfigurationSection("barrager"), arena, player, Permissions.Barrager.getValue());
 	}
 
 	public static ItemStack getPyrotechIcon(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("hunter-class-selector").getConfigurationSection("pyrotech"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("hunter-class-selector").getConfigurationSection("pyrotech"), arena, player, Permissions.Pyrotech.getValue());
 	}
 
 	public static ItemStack getFreezerIcon(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("hunter-class-selector").getConfigurationSection("freezer"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("hunter-class-selector").getConfigurationSection("freezer"), arena, player, Permissions.Freezer.getValue());
 	}
 
 	public static Inventory getHunterClassSelector(Arena arena, Player player) {
@@ -193,19 +189,19 @@ public class Config {
 	}
 
 	public static ItemStack getRunnerIcon(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("duck-class-selector").getConfigurationSection("runner"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("duck-class-selector").getConfigurationSection("runner"), arena, player, Permissions.Runner.getValue());
 	}
 
 	public static ItemStack getHealerIcon(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("duck-class-selector").getConfigurationSection("healer"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("duck-class-selector").getConfigurationSection("healer"), arena, player, Permissions.Healer.getValue());
 	}
 
 	public static ItemStack getSmokerIcon(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("duck-class-selector").getConfigurationSection("smoker"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("duck-class-selector").getConfigurationSection("smoker"), arena, player, Permissions.Smoker.getValue());
 	}
 
 	public static ItemStack getCloakerIcon(Arena arena, Player player) {
-		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("duck-class-selector").getConfigurationSection("cloaker"), arena, player);
+		return Tools.itemFromSection(Config.configfile.getConfigurationSection("settings").getConfigurationSection("duck-class-selector").getConfigurationSection("cloaker"), arena, player, Permissions.Cloaker.getValue());
 	}
 
 	public static Inventory getDuckClassSelector(Arena arena, Player player) {
@@ -248,7 +244,7 @@ public class Config {
 		Config.arenaIsntInGameCantSpectate = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("arena-isnt-in-game-message");
 		Config.arenaNotEnabled = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("arena-not-enabled-message");
 		Config.playerCantJoinButCanSpectate = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-can-spectate-message");
-		Config.playerCantSpectatePlayerInGame = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-cant-spectate-message");
+		Config.playerIngameCantSpectate = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-cant-spectate-message");
 		Config.joinMessage = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("join-message");
 		Config.quitMessage = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("quit-message");
 		Config.duckDeath = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("duck-death-message");
@@ -256,9 +252,6 @@ public class Config {
 		Config.duckLastLife = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("duck-last-life-message");
 		Config.duckHasLives = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("duck-has-lives-message");
 		Config.duckSwitchToHunter = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("duck-switch-to-hunter-message");
-		Config.hunterDeath = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("hunter-death-message");
-		Config.playerCantSpectate = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-cant-spectate-message");
-		Config.playerCanSpectate = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-can-spectate-message");
 		Config.playerInGameCantJoin = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-is-in-game-cant-join-message");
 		Config.playerCantJoinHasContentsInInventory = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-cant-join-has-contents-in-inventory-message");
 		Config.playerCantLeaveNotInGame = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-cant-leave-not-in-game-message");
@@ -270,11 +263,7 @@ public class Config {
 		Config.playerLeaveAfterRejoin = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-leave-after-rejoin-message");
 		Config.playerEnterSpectatorMode = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-enter-spectator-mode-message");
 		Config.playersNeeded = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("players-needed-actionbar");
-		Config.hasNeededPlayers = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("has-needed-players");
-		Config.notAllowedToMakeDuckhuntSign = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("not-allowed-to-make-duckhunt-sign-message");
-		Config.duckDidntChooseKit = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("duck-didnt-choose-class-message");
-		Config.hunterDidntChooseKit = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("hunter-didnt-choose-class-message");
-		Config.playerLacksPermissionForKit = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-lacks-permission-for-kit-message");
+		Config.playerLackingPermission = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-lacks-permission");
 		Config.countdownCanceled = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("countdown-canceled-title");
 		Config.countdownCanceledSub = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("countdown-canceled-subtitle");
 		Config.playerUseCommand = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-ingame-uses-non-duckhunt-command-message");
@@ -300,7 +289,8 @@ public class Config {
 		Config.endMessages = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getStringList("end-messages");
 		Config.timer = configfile.getConfigurationSection("settings").getInt("timer");
 		Config.whitelistedCommands = configfile.getConfigurationSection("settings").getStringList("whitelisted-commands");
-		Config.playerCantStartArena = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-cant-start-arena");
+		Config.playerCantStartArenaIngame = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-cant-start-arena-ingame");
+		Config.playerCantStopArenaNotIngame = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-cant-stop-arena-not-ingame");
 		Config.nonopHelp = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getConfigurationSection("help").getStringList("default-messages");
 		Config.opHelp = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getConfigurationSection("help").getStringList("op-messages");
 		Config.joinHelp = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getConfigurationSection("help").getString("join");
@@ -331,6 +321,8 @@ public class Config {
 		Config.bungeeRestartServerOnGameEnd = configfile.getConfigurationSection("settings").getConfigurationSection("bungeemode").getBoolean("restart-after-game-ends");
 		Config.noGoodArenaAvalible = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("no-good-arena-message");
 		Config.noGoodServerAvalible =  configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("no-good-server-message");
-
+		Config.playerLackingPermission = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("player-lacks-permission");
+		Config.classUnlockedTag = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("unlocked-tag");
+		Config.classLockedTag = configfile.getConfigurationSection("settings").getConfigurationSection("messages").getString("locked-tag");
 	}
 }

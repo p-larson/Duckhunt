@@ -97,12 +97,14 @@ public class Message {
 	
 	public void send() {
 		if (basictext != null) {
+			if (basictext.length()<=0) return;
 			target.sendMessage(this.decode(Config.prefix) + this.getText());
 			return;
 		}
 		
 		if (basictextlist != null) {
 			for (String line:this.getTextList()) {
+				if (line.length()<=0) continue;
 				target.sendMessage(this.decode(Config.prefix) + line);
 			}
 			return;

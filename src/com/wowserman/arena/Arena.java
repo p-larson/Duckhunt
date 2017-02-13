@@ -467,6 +467,10 @@ public class Arena {
 					// Not enough Players
 					this.cancel();
 					startRecruiting();
+					for (Player player:getPlayers()) {
+						TitlesReflection.sendTitle(player, new Message(Config.countdownCanceled, Arena.this, player).getText());
+						TitlesReflection.sendSubTitle(player, new Message(Config.countdownCanceledSub, Arena.this, player).getText());
+					}
 				} else if (timer <= 0) {
 					// Countdown is over, Game can begin.
 					startGame();
@@ -518,8 +522,12 @@ public class Arena {
 	public void startEnding() {
 		if (status == ArenaStatus.Ending) return;
 		status = ArenaStatus.Ending;
-		for (String message:Config.winMessages) 
-			this.broadcast(message, Team.None, null);
+		if (Config.bungeeSkipEndingCelebration) {
+			this.endGame();
+			return;
+		}
+		for (Player player:this.getPlayers()) 
+			new Message(Config.endMessages, this, player).send();
 		this.timer = 15;
 		new BukkitRunnable() {
 			@Override
@@ -531,6 +539,23 @@ public class Arena {
 				} else if (timer <= 0) {
 					// Countdown is over, Game Ends.
 					endGame();
+					for (Player player:Arena.this.getPlayers()) {
+						if (Arena.this.getTeam(player)==Arena.this.winningteam) {
+							for (String command:Config.winCommands) 
+								Bukkit.dispatchCommand(player, new Message(command, Arena.this, player).getText());
+							for (String command:Config.winConsoleCommands) 
+								Bukkit.dispatchCommand(player, new Message(command, Arena.this, player).getText());
+							for (String message:Config.winMessages)
+								new Message(message, Arena.this, player).send();
+						} else if (Arena.this.getTeam(player)!=Team.None && Arena.this.getTeam(player)!=Team.Spectators) {
+							for (String command:Config.looseCommands) 
+								Bukkit.dispatchCommand(player, new Message(command, Arena.this, player).getText());
+							for (String command:Config.looseConsoleCommands) 
+								Bukkit.dispatchCommand(player, new Message(command, Arena.this, player).getText());
+							for (String message:Config.looseMessages)
+								new Message(message, Arena.this, player).send();
+						}
+					}
 					this.cancel();
 				} else {
 					// Countdown is still going.
@@ -552,6 +577,7 @@ public class Arena {
 		this.startRecruiting();
 		ArenaEndedEvent e = new ArenaEndedEvent(this);
 		Bukkit.getPluginManager().callEvent(e);
+		if (Config.bungeeEnabled && Config.bungeeRestartServerOnGameEnd) Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "restart"); 
 	}
 	
 	public void killDuck(GamePlayer duck) {
