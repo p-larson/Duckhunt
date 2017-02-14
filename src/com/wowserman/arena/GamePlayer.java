@@ -125,7 +125,7 @@ public class GamePlayer {
 	}
 	
 	/**
-	 * @param itemstack The ItemStack we're adding to the Player's Inventory.
+	 * @param item The ItemStack we're adding to the Player's Inventory.
 	 */
 	public void spawnItem(ItemStack item) {
 		ItemStack[] items = player.getInventory().getContents();
@@ -162,7 +162,7 @@ public class GamePlayer {
 	}
 	
 	/**
-	 * @param itemstack The ItemStack we're adding to the Player's Inventory.
+	 * @param item The ItemStack we're adding to the Player's Inventory.
 	 */
 	public void addItem(ItemStack item) {
 		player.getInventory().addItem(item);
