@@ -40,7 +40,6 @@ public class BungeeCommunication implements PluginMessageListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.print(message);
 		Bukkit.getServer().sendPluginMessage(Duckhunt.plugin, communicationChannel, stream.toByteArray());
 	}
 	

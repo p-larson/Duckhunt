@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -71,6 +72,7 @@ public class Barrager implements Listener {
 		}
 		gp.removeAll(Config.getRustyArrow(arena, player));
 		arrow.remove();
+		player.playSound(player.getLocation(), Sound.ENTITY_SKELETON_SHOOT, 3f, 3f);
 	}
 	
 	@EventHandler
@@ -102,5 +104,7 @@ public class Barrager implements Listener {
 	
 	public void arrowHit(GamePlayer target, GamePlayer shooter) {
 		DamageManager.damage(target, shooter, 2);
+		target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.BLOCK_ANVIL_PLACE, 1f, 1f);
+		shooter.getPlayer().playSound(shooter.getPlayer().getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
 	}
 }

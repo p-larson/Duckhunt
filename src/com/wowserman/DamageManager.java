@@ -17,7 +17,6 @@ public class DamageManager {
 		boolean isFatal = newHealth <= 0;
 		GamePlayerAttackedEvent event = new GamePlayerAttackedEvent(target, attacker, damage, isFatal);
 		Bukkit.getPluginManager().callEvent(event);
-		System.out.print(target.getPlayer().getName() + " attacked by " + attacker.getPlayer().getName() + " dealing " + damage + " damage.");
 		if (event.isCancelled()) return;
 		if (isFatal) {
 			// Player will Die.

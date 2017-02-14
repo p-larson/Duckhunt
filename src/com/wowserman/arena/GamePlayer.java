@@ -2,6 +2,7 @@ package com.wowserman.arena;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -180,7 +181,6 @@ public class GamePlayer {
 	}
 	
 	public void changeType(GameClassType type) {
-		System.out.print(player.getName() + " changing class to " + type.toString());
 		switch (type) {
 		case Runner:
 			new Message(Config.equipRunner, arena, player).send();
@@ -277,11 +277,11 @@ public class GamePlayer {
 	}
 	
 	public void refill() {
-		System.out.print(player.getName() + " refilled.");
 		switch (type) {
 		case Runner:
 			if (this.getItemCount(Config.getSpeedFeather(arena, player)) < 3) {
 				this.spawnItem(Config.getSpeedFeather(arena, player));
+				this.player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 0.5f, 0.5f);
 			}
 			break;
 		case Healer:
@@ -290,31 +290,37 @@ public class GamePlayer {
 		case Smoker:
 			if (this.getItemCount(Config.getSmokeGrenade(arena, player)) < 1) {
 				this.spawnItem(Config.getSmokeGrenade(arena, player));
+				this.player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 0.5f, 0.5f);
 			}
 			break;
 		case Cloaker:
 			if (this.getItemCount(Config.getInvisibilityCloak(arena, player)) < 1) {
 				this.spawnItem(Config.getInvisibilityCloak(arena, player));
+				this.player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 0.5f, 0.5f);
 			}
 			break;
 		case Cyborg:
 			if (this.getItemCount(Config.getPlasma(arena, player)) < 5) {
 				this.spawnItem(Config.getPlasma(arena, player));
+				this.player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 0.5f, 0.5f);
 			}
 			break;
 		case Pyrotech:
 			if (this.getItemCount(Config.getFireball(arena, player)) < 3) {
 				this.spawnItem(Config.getFireball(arena, player));
+				this.player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 0.5f, 0.5f);
 			}
 			break;
 		case Barrager:
 			if (!this.isShooting() && this.getItemCount(Config.getRustyArrow(arena, player)) < 8) {
 				this.spawnItem(Config.getRustyArrow(arena, player));
+				this.player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 0.5f, 0.5f);
 			}
 			break;
 		case Freezer:
 			if (this.getItemCount(Config.getIcePillar(arena, player)) < 5) {
 				this.addItem(Config.getIcePillar(arena, player));
+				this.player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 0.5f, 0.5f);
 			}
 			break;
 		case None:
@@ -330,12 +336,10 @@ public class GamePlayer {
 			public void run() {
 				if (arena.getStatus() != ArenaStatus.InGame) return;
 				if (!arena.hasPlayer(self)) {
-					System.out.print("Player left Arena. Refilling Canceled for " + player.getName());
 					this.cancel(); 
 					return;
 				}
 				if (selectedGameClass != getType()) {
-					System.out.print(player.getName() + " switched classes, refilling is stopping and starting back up again.");
 					refillclock();
 					this.cancel();
 					return;

@@ -36,7 +36,6 @@ public class Tools {
 	}
 	
 	public static ItemStack itemFromSection(ConfigurationSection section, Arena arena, Player player, String perm) {
-		System.out.print(section==null);
 		int id = section.getInt("item-id");
 		int data = section.getInt("data-value");
 		String displayname = section.getString("display-name");

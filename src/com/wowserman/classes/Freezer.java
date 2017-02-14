@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -50,6 +51,8 @@ public class Freezer implements Listener {
 	
 	public void snowballHitPlayer(GamePlayer target, GamePlayer shooter) {
 		DamageManager.damage(target, shooter, 2);
+		target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.BLOCK_SNOW_STEP, 1f, 1f);
+		shooter.getPlayer().playSound(shooter.getPlayer().getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
 	}
 	
 	@EventHandler
@@ -57,7 +60,6 @@ public class Freezer implements Listener {
 		if (e.getEntity() instanceof Snowball == false) return;
 		Snowball snowball = (Snowball) e.getEntity();
 		if (snowball.getShooter() instanceof Player == false) {
-			System.out.print("Snowball was not shot by a Player");
 			return;
 		}
 		Player sh = (Player) snowball.getShooter();
@@ -69,7 +71,6 @@ public class Freezer implements Listener {
 			GamePlayer target = arena.getGamePlayer(tg);
 			GamePlayer shooter = arena.getGamePlayer(sh);
 			if (arena.getTeam(tg)!=Team.Ducks) {
-				System.out.print("Target was not a Duck");
 				continue;
 			}
 			snowballHitPlayer(target, shooter);
@@ -102,12 +103,14 @@ public class Freezer implements Listener {
 		icepillars.add(block.getLocation());
 		if (block.getType()!=Material.AIR) return;
 		block.setType(Material.ICE);
+		block.getWorld().playSound(block.getLocation(), Sound.BLOCK_GLASS_BREAK, 1f, 1f);
 	}
 	
 	private static void clearPillar(Block block) {
 		if (block.getType()!=Material.ICE) return;
 		block.setType(Material.AIR);
 		icepillars.remove(block.getLocation());
+		block.getWorld().playSound(block.getLocation(), Sound.BLOCK_GLASS_BREAK, 1f, 1f);
 	}
 	
 	@SuppressWarnings("deprecation")

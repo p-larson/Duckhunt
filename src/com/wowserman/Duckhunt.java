@@ -226,7 +226,7 @@ public class Duckhunt extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		System.out.print("Stopping Duckhunt...");
+		System.out.print("Thank you for Downloading Duckhunt.");
 		for (Arena arena:arenas) arena.allPlayersLeave();
 		Freezer.removeAllIcePillars();
 	}

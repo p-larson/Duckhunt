@@ -30,25 +30,21 @@ public class InventoryClick implements Listener {
 			if (Tools.isItem(item, Config.getCyborgIcon(arena, player))) {
 				arena.changeClass(arena.getGamePlayer(player), GameClassType.Cyborg);
 				player.closeInventory();
-				System.out.print("Cy");
 			}
 			
 			if (Tools.isItem(item, Config.getBarragerIcon(arena, player))) {
 				arena.changeClass(arena.getGamePlayer(player), GameClassType.Barrager);
 				player.closeInventory();
-				System.out.print("Ba");
 			}
 			
 			if (Tools.isItem(item, Config.getPyrotechIcon(arena, player))) {
 				arena.changeClass(arena.getGamePlayer(player), GameClassType.Pyrotech);
 				player.closeInventory();
-				System.out.print("Py");
 			}
 			
 			if (Tools.isItem(item, Config.getFreezerIcon(arena, player))) {
 				arena.changeClass(arena.getGamePlayer(player), GameClassType.Freezer);
 				player.closeInventory();
-				System.out.print("F");
 			}
 			e.setCancelled(true);
 		}
@@ -57,25 +53,21 @@ public class InventoryClick implements Listener {
 			if (Tools.isItem(item, Config.getRunnerIcon(arena, player))) {
 				arena.changeClass(arena.getGamePlayer(player), GameClassType.Runner);
 				player.closeInventory();
-				System.out.print("Ru");
 			}
 			
 			if (Tools.isItem(item, Config.getHealerIcon(arena, player))) {
 				arena.changeClass(arena.getGamePlayer(player), GameClassType.Healer);
 				player.closeInventory();
-				System.out.print("He");
 			}
 			
 			if (Tools.isItem(item, Config.getSmokerIcon(arena, player))) {
 				arena.changeClass(arena.getGamePlayer(player), GameClassType.Smoker);
 				player.closeInventory();
-				System.out.print("Sm");
 			}
 			
 			if (Tools.isItem(item, Config.getCloakerIcon(arena, player))) {
 				arena.changeClass(arena.getGamePlayer(player), GameClassType.Cloaker 	);
 				player.closeInventory();
-				System.out.print("Cl");
 			}
 			e.setCancelled(true);
 		}

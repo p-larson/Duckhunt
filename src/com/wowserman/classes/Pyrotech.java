@@ -3,6 +3,7 @@ package com.wowserman.classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
@@ -42,6 +43,7 @@ public class Pyrotech implements Listener {
 		fireball.setShooter(e.getPlayer());
 		fireball.setVelocity(e.getPlayer().getLocation().getDirection().multiply(2.5));
 		fireballs.add(fireball);
+		player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_GHAST_SHOOT, 1f, 1f);
 	}
 	
 	@EventHandler

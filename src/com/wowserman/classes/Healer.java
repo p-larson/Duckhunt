@@ -1,6 +1,7 @@
 package com.wowserman.classes;
 
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,6 +37,7 @@ public class Healer implements Listener {
 	public void heal(Player player, Player healer) {
 		player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20, 2));
 		player.getWorld().spawnParticle(Particle.HEART, player.getEyeLocation(), 10);
+		player.getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1f, 1f);
 	}
 	
 }

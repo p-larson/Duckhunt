@@ -1,6 +1,7 @@
 package com.wowserman.classes;
 
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -30,5 +31,6 @@ public class Runner implements Listener {
 		player.removeItemInHand();
 		e.getPlayer().getWorld().spawnParticle(Particle.CLOUD, e.getPlayer().getEyeLocation(), 10, 0.5, 0.5, 0.5, 0);
 		e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 2, false, false));
+		player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_HORSE_GALLOP, 1f, 1f);
 	}
 }

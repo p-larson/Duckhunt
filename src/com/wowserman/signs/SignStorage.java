@@ -65,7 +65,7 @@ public class SignStorage {
 		section.set("z", z);
 		section.set("world", world);
 		section.set("bungee", false);
-		section.set("leave", true);
+		section.set("leave", leaveSign);
 		section.set("arena", arena.getName());
 		this.saveFile();
 		new ArenaSign(arena, location, leaveSign);
@@ -93,14 +93,13 @@ public class SignStorage {
 	}
 	
 	public void loadSign(ConfigurationSection section) {
-		System.out.print(section);
 		boolean bungee = section.getBoolean("bungee");
 		if (bungee) {
 			final int x = section.getInt("x");
 			final int y = section.getInt("y");
 			final int z = section.getInt("z");
 			final String world = section.getString("world");
-			System.out.print("Loading Sign at " + x + ", " + y + ", " + z + ", " + world);
+			System.out.print("Duckhunt Loaded Sign at " + x + ", " + y + ", " + z + ", " + world);
 			Location location = new Location(Bukkit.getWorld(world), x, y, z);
 			BungeeArena arena = Duckhunt.getBungeeArenaOfServerName(section.getString("server"));
 			new BungeeArenaSign(arena, location);
@@ -109,7 +108,7 @@ public class SignStorage {
 			final int y = section.getInt("y");
 			final int z = section.getInt("z");
 			final String world = section.getString("world");
-			System.out.print("Loading Sign at " + x + ", " + y + ", " + z + ", " + world);
+			System.out.print("Duckhunt Loaded Sign at " + x + ", " + y + ", " + z + ", " + world);
 			final boolean leave = section.getBoolean("leave");
 			Location location = new Location(Bukkit.getWorld(world), x, y, z);
 			Arena arena = Duckhunt.getArenaOfName(section.getString("arena"));

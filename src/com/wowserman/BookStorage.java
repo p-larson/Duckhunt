@@ -74,7 +74,7 @@ public class BookStorage {
 			book.setAmount(1);
 			return book;
 		} else {
-			ItemStack unknown = new ItemStack(Material.PAPER, 1);
+			ItemStack unknown = new ItemStack(Material.BOOK, 1);
 			ItemMeta m = unknown.getItemMeta();
 			m.setDisplayName("?");
 			List<String> lores = new ArrayList<String>();

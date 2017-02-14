@@ -17,7 +17,5 @@ public class GamePlayerLeftArena implements Listener {
 		e.getGamePlayer().getPlayer().getInventory().clear();
 		
 		BungeeCommunication.sendMessage("connect " + e.getGamePlayer().getPlayer().getName() + " " + Config.bungeeLobbyServerName + " " + false);
-		
-		System.out.print("#" + e.getGamePlayer().getPlayer().getName() + " left " + e.getArena().getName() + "#");
 	}
 }

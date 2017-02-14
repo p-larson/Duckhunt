@@ -49,6 +49,10 @@ public class DuckhuntExecutor implements CommandExecutor {
 		}
 		
 		if (args[0].equalsIgnoreCase("create")) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
 			if (args.length < 2) {
 				new Message("/duckhunt create (arenaname)", null, player).send();
 				return false;
@@ -58,13 +62,18 @@ public class DuckhuntExecutor implements CommandExecutor {
 			if (Duckhunt.getArenaOfName(key)==null) {
 				Duckhunt.arenaStorage.createArena(key);
 				new Message(Config.createdArena, Duckhunt.getArenaOfName(key), player).send();
-				System.out.print(Duckhunt.getArenaOfName(key));
+				return true;
 			} else {
 				new Message(Config.arenaAlreadyExists, Duckhunt.getArenaOfName(key), player).send();
+				return true;
 			}
 		}
 		
 		if (args[0].equalsIgnoreCase("delete")) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
 			if (args.length < 2) {
 				new Message("/duckhunt delete (arena)", null, player).send(); 
 				return true;
@@ -74,8 +83,10 @@ public class DuckhuntExecutor implements CommandExecutor {
 				if (arena != null) {
 					Duckhunt.arenaStorage.configfile.set(key, null);
 					new Message("&a" + key + " Deleted Successfully.", null, player).send();
+					return true;
 				} else {
 					new Message(Config.arenaDoesntExist, new Arena(args[1], null, 0, 0, null, null, null, null), player).send();
+					return true;
 				}
 			}
 		}
@@ -111,12 +122,20 @@ public class DuckhuntExecutor implements CommandExecutor {
 		}
 		
 		if (args[0].equalsIgnoreCase("setlobby")) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
 			Config.setLobby(player.getLocation());
 			new Message("§aSaved Lobby Location", null, player).send();
 			return true;
 		}
 		
 		if (args[0].equalsIgnoreCase("savebook")) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
 			if (player.getItemInHand().getType()==Material.WRITTEN_BOOK) {
     			ItemStack book = player.getItemInHand();
     			Duckhunt.bookStorage.write(book);
@@ -129,6 +148,10 @@ public class DuckhuntExecutor implements CommandExecutor {
 		}
 		
 		if (args[0].equalsIgnoreCase("forcestart")) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
 			// Do something
 			if (args.length < 2) {
 				new Message("/duckhunt forcestart (arena)", null, player).send();
@@ -137,10 +160,18 @@ public class DuckhuntExecutor implements CommandExecutor {
 			Arena arena = Duckhunt.getArenaOfName(args[1]);
 			if (arena != null) {
 				arena.startGame();
-			} else new Message(Config.arenaDoesntExist, new Arena(args[1], null, 0, 0, null, null, null, null), player).send();
+				return true;
+			} else {
+				new Message(Config.arenaDoesntExist, new Arena(args[1], null, 0, 0, null, null, null, null), player).send();
+				return true;
+			}
 		}
 		
 		if (args[0].equalsIgnoreCase("forcestop")) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
 			// Do something
 			if (args.length < 2) {
 				// Force stop Help
@@ -158,6 +189,10 @@ public class DuckhuntExecutor implements CommandExecutor {
 		}
 		
 		if (args[0].equalsIgnoreCase("edit")) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
 			if (args.length < 3) {
 				new Message("/duckhunt edit (arena)", null, player).send();
 				return true;
@@ -175,7 +210,11 @@ public class DuckhuntExecutor implements CommandExecutor {
 		}
 		
 		if (args[0].equalsIgnoreCase("joinsign")) {
-			if (args.length < 1) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
+			if (args.length < 2) {
 				new Message("/duckhunt joinsign (arena)", null, player).send();
 				return true;
 			}
@@ -192,6 +231,14 @@ public class DuckhuntExecutor implements CommandExecutor {
 		}
 		
 		if (args[0].equalsIgnoreCase("leavesign")) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
+			if (args.length < 2) {
+				new Message("/duckhunt leavesign (arena)", null, player).send();
+				return true;
+			}
 			Arena arena = Duckhunt.getArenaOfName(args[1]);
 			if (arena != null) {
 				Location targetLocation = Tools.getTargetBlock(player, 10, Material.AIR).getLocation();
@@ -280,12 +327,16 @@ public class DuckhuntExecutor implements CommandExecutor {
 		}
 		
 		if (args[0].equalsIgnoreCase("bungeesign")) {
+			if (!player.isOp()) {
+				new Message(Config.playerLackingPermission, null, player).send();
+				return false;
+			}
 			// Do something
 			if (!Config.bungeeEnabled) {
 				new Message("&cSorry but Bungee-Mode isn't Enabled.", null, player).send();
 				return true;
 			}
-			if (args.length < 1) {
+			if (args.length < 2) {
 				new Message("/duckhunt bungeesign (servername)", null, player).send();
 				return true;
 			}

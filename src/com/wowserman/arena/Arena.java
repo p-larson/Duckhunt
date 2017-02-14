@@ -8,6 +8,7 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -262,10 +263,12 @@ public class Arena {
 		case Ducks:
 			this.ducks.add(gp);
 			player.setGameMode(GameMode.SURVIVAL);
+			player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_AMBIENT, 1f, 1f);
 			break;
 		case Hunters:
 			this.hunters.add(gp);
 			player.setGameMode(GameMode.SURVIVAL);
+			player.playSound(player.getLocation(), Sound.ENTITY_WOLF_HOWL, 1f, 1f);
 			break;
 		case Spectators:
 			this.spectators.add(gp);
@@ -289,20 +292,20 @@ public class Arena {
 	}
 	
 	public void join(Player player) {
-		if (status == ArenaStatus.Disabled) {
-			new Message(Config.arenaNotEnabled, this, player).send();
-			return;
-		}
-		if (Config.ignoreInventories==false && Tools.isInventoryEmpty(player)==false) {
-			new Message(Config.playerCantJoinHasContentsInInventory, this, player).send();
-			return;
-		}
 		if (Duckhunt.isPlayerInGame(player)) {
 			new Message(Config.playerInGameCantJoin, Duckhunt.getArena(player), player).send();
 			return;
 		}
+		if (status == ArenaStatus.Disabled) {
+			new Message(Config.arenaNotEnabled, this, player).send();
+			return;
+		}
 		if (status == ArenaStatus.InGame) {
 			new Message(Config.playerCantJoinButCanSpectate, this, player).send();
+			return;
+		}
+		if (Config.ignoreInventories==false && Tools.isInventoryEmpty(player)==false) {
+			new Message(Config.playerCantJoinHasContentsInInventory, this, player).send();
 			return;
 		}
 		this.addPlayer(player);
@@ -330,7 +333,7 @@ public class Arena {
 			return;
 		}
 		if (Duckhunt.isPlayerInGame(player)) {
-			new Message(Config.playerCantSpectatePlayerInGame, Duckhunt.getArena(player), player).send();
+			new Message(Config.playerIngameCantSpectate, Duckhunt.getArena(player), player).send();
 			return;
 		}
 		if (status != ArenaStatus.InGame) {
@@ -339,6 +342,7 @@ public class Arena {
 		}
 		this.addPlayer(player);
 		this.preferedteam.put(player.getName(), Team.None);
+		this.joinTeam(Team.Spectators, player);
 	}
 	
 	public void rejoin(Player player) {
@@ -438,10 +442,12 @@ public class Arena {
 			public void run() {
 				updateScoreboard();
 				updateActionbar();
-				if (status != ArenaStatus.Recruiting) {
-					if (canStart()) {
-						startCountdown();
-					}
+				if (canStart()) {
+					startCountdown();
+					this.cancel();
+				}
+				
+				if (Arena.this.getStatus()!=ArenaStatus.Recruiting) {
 					this.cancel();
 				}
 			}
@@ -454,6 +460,8 @@ public class Arena {
 	public void startCountdown() {
 		if (status == ArenaStatus.Starting) return;
 		status = ArenaStatus.Starting;
+		for (Player player:this.getPlayers())
+			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
 		this.timer = 60; // 60 seconds = 1 minute;
 		new BukkitRunnable() {
 			@Override
@@ -481,6 +489,7 @@ public class Arena {
 						for (Player player:getPlayers()) {
 							TitlesReflection.clearTitle(player);
 							TitlesReflection.sendTitle(player, timer + "s");
+							player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1f, 1f);
 						}
 					}
 					timer += -1;
@@ -497,6 +506,8 @@ public class Arena {
 		if (status == ArenaStatus.InGame) return;
 		status = ArenaStatus.InGame;
 		this.timer = Config.timer;
+		for (Player player:this.getPlayers())
+			player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1f, 1f);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -526,8 +537,10 @@ public class Arena {
 			this.endGame();
 			return;
 		}
-		for (Player player:this.getPlayers()) 
+		for (Player player:this.getPlayers()) {
 			new Message(Config.endMessages, this, player).send();
+			player.playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_DEATH, 3f, 3f);
+		}		
 		this.timer = 15;
 		new BukkitRunnable() {
 			@Override
@@ -540,6 +553,7 @@ public class Arena {
 					// Countdown is over, Game Ends.
 					endGame();
 					for (Player player:Arena.this.getPlayers()) {
+						if (Arena.this.getTeam(player)==Team.None || Arena.this.getTeam(player)==Team.Spectators) continue;
 						if (Arena.this.getTeam(player)==Arena.this.winningteam) {
 							for (String command:Config.winCommands) 
 								Bukkit.dispatchCommand(player, new Message(command, Arena.this, player).getText());
@@ -547,7 +561,7 @@ public class Arena {
 								Bukkit.dispatchCommand(player, new Message(command, Arena.this, player).getText());
 							for (String message:Config.winMessages)
 								new Message(message, Arena.this, player).send();
-						} else if (Arena.this.getTeam(player)!=Team.None && Arena.this.getTeam(player)!=Team.Spectators) {
+						} else {
 							for (String command:Config.looseCommands) 
 								Bukkit.dispatchCommand(player, new Message(command, Arena.this, player).getText());
 							for (String command:Config.looseConsoleCommands) 

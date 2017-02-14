@@ -38,7 +38,6 @@ public class BungeeArenaSign {
 	public boolean update() {
 		if (!isSign()) {
 			this.delete();
-			System.out.print("Not a Sign " + getName());
 			return false;
 		}
 		Sign sign = (Sign) this.getBlock().getState();
@@ -92,7 +91,6 @@ public class BungeeArenaSign {
 	
 	public BungeeArenaSign(BungeeArena arena, Location location) {
 		
-		System.out.print(location);
 		this.arena = arena;
 		this.location = location;
 		Duckhunt.bungeeSigns.add(this);
@@ -100,12 +98,10 @@ public class BungeeArenaSign {
 			@Override
 			public void run() {
 				if (update()==false || deleted) {
-					System.out.print("Canceled Update for " + getName());
 					this.cancel();
 				}
 			}
 		}.runTaskTimer(Duckhunt.plugin, 0, 20);
 		
-		System.out.print(arena);
 	}
 }

@@ -21,7 +21,6 @@ public class CommandPreprocess implements Listener {
 		if (arena==null) return;
 		boolean canceled = true;
 		for (String command:Config.whitelistedCommands) {
-			System.out.print(command + ", " + e.getMessage() + "," + (!e.getMessage().toLowerCase().contains(command.toLowerCase())));
 			if (e.getMessage().toLowerCase().contains(command.toLowerCase())) {
 				canceled = false;
 				break;

@@ -1,6 +1,7 @@
 package com.wowserman.classes;
 
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -31,6 +32,7 @@ public class Cloaker implements Listener {
 		if (Tools.isItem(player.getPlayer().getItemInHand(), Config.getInvisibilityCloak(arena, player.getPlayer())) != true) return;
 		player.removeItemInHand();
 		e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100, 1, false, false));
+		e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_PORTAL_TRAVEL, 1f, 1f);
 		new BukkitRunnable() {
 			int i = 100;
 			@Override

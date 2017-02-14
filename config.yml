@@ -43,7 +43,7 @@ settings:
     arena-not-enabled-message: '&c@Arena isnt Enabled!'
     # What should the message be when a Player uses /duckhunt autojoin and there is no good Arena to join?
     no-good-arena-message: '&cThere are No Good Games to Join Right Now.'
-     # What should the message be when a Player uses /duckhunt autoconnect and there is no good Arena to connect to?
+    # What should the message be when a Player uses /duckhunt autoconnect and there is no good Arena to connect to?
     no-good-server-message: '&cThere are No Good Servers to Join Right Now.'
     # What should the message be when a player in-game trys to spectate a game?
     player-cant-spectate-message: 'You Must leave the Game before Spectating!'
@@ -108,7 +108,7 @@ settings:
     locked-tag: '&cLocked'
     # What should the messages be when the game ends?
     end-messages:
-    - '&ewinningteam &b has won the game!'
+    - '&e@WinningTeam &b has won the game!'
     # What should the message be when a duck starts?
     duck-start-messages:
     - '&e&oYour a Duck!'
@@ -545,7 +545,7 @@ settings:
     - '@RandomColor@WinningTeam'
     - '@EmptyLine'
     - '&c&lLast Hunter Kill'
-    - '@LastKiller'
+    - '@LastDuckKiller'
   lobby:
     # Should players waiting in the game's lobby be given the book stored in /duckhunt savebook?
     # (This is for if you want to give the Players joining a Tutorial of the Game)

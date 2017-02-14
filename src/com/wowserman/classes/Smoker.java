@@ -2,6 +2,7 @@ package com.wowserman.classes;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -25,7 +26,6 @@ public class Smoker implements Listener {
 					this.cancel();
 					return;
 				}
-				
 				pos.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, pos, 25, 1, 1, 1, 0);
 				counter += -1;
 			}
@@ -43,5 +43,6 @@ public class Smoker implements Listener {
 		GamePlayer gp = arena.getGamePlayer(player);
 		if (gp.getType()!=GameClassType.Smoker) return;
 		smokeGrenadeLands(snowball.getLocation());
+		player.getWorld().playSound(snowball.getLocation(), Sound.BLOCK_ANVIL_LAND, 10f, 10f);
 	}
 }

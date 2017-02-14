@@ -4,6 +4,7 @@ import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,6 +26,8 @@ public class Cyborg implements Listener {
 	
 	public void laserHitPlayer(GamePlayer target, GamePlayer shooter) {
 		DamageManager.damage(target, shooter, 10);
+		target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.ENTITY_WITHER_HURT, 1f, 1f);
+		shooter.getPlayer().playSound(shooter.getPlayer().getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
 	}
 	
 	private void laserHit(Location loc, GamePlayer shooter) {
@@ -57,6 +60,7 @@ public class Cyborg implements Listener {
 			pos.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, pos, 1, 0, 0, 0, 0);
 			i+=1;
 		}
+		player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_WITHER_SHOOT, 1f, 1f);
 	}
 	
 	@SuppressWarnings("deprecation")
