@@ -112,7 +112,7 @@ public class DuckhuntExecutor implements CommandExecutor {
 		
 		if (args[0].equalsIgnoreCase("leave")) {
 			// Do something
-			if (Duckhunt.isPlayerInGame(player)) {
+			if (Duckhunt.isInGame(player)) {
 				Duckhunt.getArena(player).leave(player);
 				return true;
 			} else {

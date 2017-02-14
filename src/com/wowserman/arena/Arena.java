@@ -292,7 +292,7 @@ public class Arena {
 	}
 	
 	public void join(Player player) {
-		if (Duckhunt.isPlayerInGame(player)) {
+		if (Duckhunt.isInGame(player)) {
 			new Message(Config.playerInGameCantJoin, Duckhunt.getArena(player), player).send();
 			return;
 		}
@@ -332,7 +332,7 @@ public class Arena {
 			new Message(Config.playerCantJoinHasContentsInInventory, this, player).send();
 			return;
 		}
-		if (Duckhunt.isPlayerInGame(player)) {
+		if (Duckhunt.isInGame(player)) {
 			new Message(Config.playerIngameCantSpectate, Duckhunt.getArena(player), player).send();
 			return;
 		}

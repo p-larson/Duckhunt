@@ -60,7 +60,11 @@ public class Duckhunt extends JavaPlugin {
 	public static SignStorage signStorage;
 	public static BungeeCommunication bungeeComunication;
 	
-	public static boolean isPlayerInGame(Player player) {
+	/**
+	 * @param player The Player we're Checking.
+	 * @return True if the Player is In-Game, False if the Player isn't.
+	 */
+	public static boolean isInGame(Player player) {
 		for (Arena arena : arenas) {
 			if (arena.getPlayers().contains(player)) return true;
 			else continue;
@@ -68,10 +72,17 @@ public class Duckhunt extends JavaPlugin {
 		return false;
 	}
 	
+	/**
+	 * @return The List of all of the Arenas known.
+	 */
 	public static List<Arena> getArenas() {
 		return arenas;
 	}
 	
+	/**
+	 * @param player The Player we're getting the Arena of.
+	 * @return The Arena of the Player. Can be null if the Player isn't in Game.
+	 */
 	public static Arena getArena(Player player) {
 		for (Arena a : arenas) {
 			if (a.getPlayers().contains(player)) return a; 
@@ -79,16 +90,17 @@ public class Duckhunt extends JavaPlugin {
 		return null;
 	}
 	
+	/**
+	 * @param player The Player we're trying to get the Team of.
+	 * @return The Team of the Player. Returns None if the Player isn't In-Game.
+	 */
 	public static Team getTeam(Player player) {
 		Arena arena = getArena(player);
 		if (arena != null) return arena.getTeam(player);
 		else return Team.None;
 	}
 	
-	public static boolean isInGame(Player player) {
-		if (getArena(player)==null) return false;
-		else return true;
-	}
+
 	
 	public static Arena getArenaOfName(String name) {
 		for (Arena arena:arenas) 
