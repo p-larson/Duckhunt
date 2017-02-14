@@ -52,83 +52,141 @@ public class Arena {
 	private String lastDuckKiller = "?";
 	private String duckFinisher = "?";
 	
+	/**
+	 * @return True if the Arena is Enabled, False if the Arena is Disabled.
+	 */
 	public boolean isEnabled() {
 		return enabled;
 	}
 	
+	/**
+	 * @param value The New Value.
+	 */
 	public void setEnabled(boolean value) {
 		enabled = value;
 	}
 	
+	/**
+	 * @return The Name of the Arena, with the First Letter Upper-Cased.
+	 */
 	public String getName() {
 		return name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 	
+	/**
+	 * @param player The Player we're getting the Lives of.
+	 * @return The Lives of the Player.
+	 */
 	public int getLives(Player player) {
 		if (this.lives.get(player.getName())!=null) return this.lives.get(player.getName());
 		else return 0;
 	}
 	
+	/**
+	 * @param player The Player we're Changing the Lives of.
+	 * @param value The New Value of Lives of the Player.
+	 */
 	public void setLives(Player player, int value) {
 		this.lives.put(player.getName(), value);
 	}
 	
+	/**
+	 * @return The Status of the Arena.
+	 */
 	public ArenaStatus getStatus() {
 		return status;
 	}
 	
+	/**
+	 * @param status The New Status of the Arena
+	 */
 	public void setStatus(ArenaStatus status) {
 		this.status = status;
 	}
 	
+	/**
+	 * @return The Current Timer / Count-down.
+	 */
 	public int getTimer() {
 		return timer;
 	}
 	
+	/**
+	 * @return The Current Player Count of the Arena.
+	 */
 	public int getPlayerCount() {
 		return this.gamePlayers.size();
 	}
 	
+	/**
+	 * @param player The Player we're getting the GamePlayer of.
+	 * @return The GamePlayer of the Player. Returns null if the Player isn't in the Arena.
+	 */
 	public GamePlayer getGamePlayer(Player player) {
-		GamePlayer gamePlayer = null;
 		for (GamePlayer gp:this.getGamePlayers()) {
-			if (gp.getPlayer().getName() == player.getName()) gamePlayer = gp;
+			if (gp.getPlayer().getName() == player.getName()) return gp;
 		}
-		return gamePlayer;
+		return null;
 	}
 	
+	/**
+	 * @param player The Player we're removing from the Arena.
+	 */
 	private void removePlayer(Player player) {
 		gamePlayers.remove(this.getGamePlayer(player));
 	}
 	
+	/**
+	 * @param player The Player we're adding to the Arena.
+	 */
 	private void addPlayer(Player player) {
 		GamePlayer gp = new GamePlayer(this, player);
 		if (gamePlayers.contains(gp)) return;
 		gamePlayers.add(gp);
 	}
 	
+	/**
+	 * @return The GamePlayers of the Arena.
+	 */
 	public List<GamePlayer> getGamePlayers() {
 		return gamePlayers;
 	}
 	
+	/**
+	 * @return The Players of the Arena.
+	 */
 	public List<Player> getPlayers() {
 		List<Player> l = new ArrayList<Player>();
 		for (GamePlayer p:this.getGamePlayers()) l.add(p.getPlayer());
 		return l; 
 	}
 	
+	/**
+	 * @param player The GamePlayer we're Checking.
+	 * @return True if the Arena contains the Player, False if it doesn't.
+	 */
 	public boolean hasPlayer(GamePlayer player) {
 		return this.getGamePlayers().contains(player);
 	}
 	
+	/**
+	 * @return The Minimum Players needed for the Arena to Start.
+	 */
 	public int getMinPlayers() {
 		return minPlayers;
 	}
 	
+	/**
+	 * @return The Maximum Players allowed in the Arena at one time.
+	 */
 	public int getMaxPlayers() {
 		return maxPlayers;
 	}
 	
+	/**
+	 * @param player The Player we're Getting the GameClassType of.
+	 * @return The GameClassType. Returns None if the GamePlayer isn't in the Arena.
+	 */
 	public GameClassType getGameClassType(Player player) {
 		
 		for (GamePlayer gm:this.getGamePlayers())
@@ -136,40 +194,69 @@ public class Arena {
 		return GameClassType.None;
 	}
 	
+	/**
+	 * @return The Duck Spawn.
+	 */
 	public Location getDuckSpawn() {
 		return duckSpawn;
 	}
 	
+	/**
+	 * @return The Hunter Spawn.
+	 */
 	public Location getHunterSpawn() {
 		return hunterSpawn;
 	}
 	
+	/**
+	 * @return The List of Checkpoints.  Not Used or Fully Implemented Yet.
+	 */
+	@Deprecated
 	public List<Location> getCheckpoints() {
 		return checkpoints;
 	}
 	
+	/**
+	 * @return The Current Size of the Duck Team.
+	 */
 	public int getDuckCount() {
 		return ducks.size();
 	}
 	
+	/**
+	 * @return The Current Size of the Hunter Team.
+	 */
 	public int getHunterCount() {
 		return hunters.size();
 	}
 	
+	/**
+	 * @return The Current Size of the Spectator Team.
+	 */
 	public int getSpectatorCount() {
 		return spectators.size();
 	}
 	
+	/**
+	 * @return True if the Arena has enough Players to Start, False if there isn't enough Players.
+	 */
 	public boolean canStart() {
 		return (this.getPlayerCount() >= this.minPlayers);
 	}
 	
+	/**
+	 * @return A GamePlayer who's Team Preference is set to None. Returns Null if there is no Game Player with no Preference.
+	 */
 	private GamePlayer getGamePlayerWithoutTeamPreference() {
 		for (GamePlayer gp:this.getGamePlayers()) {
 			if (gp.getTeamPreference()==Team.None) return gp;
 		} return null;
 	}
 	
+	/**
+	 * Splits the GamePlayers into Teams.
+	 * Takes into account the GamePlayer's Team Preference.
+	 */
 	public void splitIntoTeams() {
 		List<GamePlayer> p = new ArrayList<GamePlayer>(this.getGamePlayers()); // All Game Players reference
 		List<GamePlayer> d = new ArrayList<GamePlayer>(); // ducks
@@ -209,6 +296,11 @@ public class Arena {
 		}
 	}
 	
+	/**
+	 * Teleports the Player to their Team's Spawn.
+	 * 
+	 * @param player The Player we're Teleporting to Spawn.
+	 */
 	public void teleportToSpawn(Player player) {
 		switch (this.getTeam(player)) {
 		case Ducks:
@@ -225,13 +317,25 @@ public class Arena {
 		}
 	}
 	
-	public void changeClass(GamePlayer gp, GameClassType type) {
-		GamePlayerSwitchClassEvent e = new GamePlayerSwitchClassEvent(gp, gp.getType(), type);
+	/**
+	 * Changes a GamePlayer's GameClassType.
+	 * 
+	 * @param player The GamePlayer we're Changing the GameClassType to.
+	 * @param type The New GameClassType of the GamePlayer
+	 */
+	public void changeClass(GamePlayer player, GameClassType type) {
+		GamePlayerSwitchClassEvent e = new GamePlayerSwitchClassEvent(player, player.getType(), type);
 		Bukkit.getPluginManager().callEvent(e);
 		if (e.isCancelled()) return;
-		gp.changeType(type);
+		player.changeType(type);
 	}
 	
+	/**
+	 * Change the Team Preference of a Player.
+	 * 
+	 * @param player The Player we're setting the Prefered Team of.
+	 * @param team The New Team the Player Prefers.
+	 */
 	public void changePreferedTeam(Player player, Team team) {
 		if (this.getPreferedTeam(player)==team) return;
 		this.preferedteam.put(player.getName(), team);
@@ -251,11 +355,21 @@ public class Arena {
 		this.updateScoreboard();
 	}
 	
+	/**
+	 * @param player The Player we're getting the Team Preference of.
+	 * @return The Team Preference of the Player.
+	 */
 	public Team getPreferedTeam(Player player) {
 		if (this.preferedteam.get(player.getName())!=null) return this.preferedteam.get(player.getName());
 		else return Team.None;
 	}
 	
+	/**
+	 * Used for having Player's Join Teams.
+	 * 
+	 * @param team The Team the Player will Join.
+	 * @param player The Player we're having Join a Team.
+	 */
 	public void joinTeam(Team team, Player player) {
 		GamePlayer gp = this.getGamePlayer(player);
 		this.leaveTeam(player); // Leave their past team 
@@ -282,6 +396,11 @@ public class Arena {
 		this.teleportToSpawn(player);
 	}
 	
+	/**
+	 * Used for having Players Leave their Teams.
+	 * 
+	 * @param player The Player that we're having Leave their Team.
+	 */
 	public void leaveTeam(Player player) {
 		if (this.getGamePlayer(player)==null) return;
 		this.ducks.remove(this.getGamePlayer(player));
@@ -291,6 +410,11 @@ public class Arena {
 		player.setGameMode(GameMode.SURVIVAL);
 	}
 	
+	/**
+	 * Used for having Players Join the Arena.
+	 * 
+	 * @param player The Player we're having Join the Arena.
+	 */
 	public void join(Player player) {
 		if (Duckhunt.isInGame(player)) {
 			new Message(Config.playerInGameCantJoin, Duckhunt.getArena(player), player).send();
@@ -323,6 +447,11 @@ public class Arena {
 		Bukkit.getPluginManager().callEvent(e);
 	}
 	
+	/**
+	 * Used for having the Player Spectate the Arena.
+	 * 
+	 * @param player The Player we're having Spectate the Arena.
+	 */
 	public void spectate(Player player) {
 		if (status == ArenaStatus.Disabled) {
 			new Message(Config.arenaNotEnabled, this, player).send();
@@ -345,6 +474,11 @@ public class Arena {
 		this.joinTeam(Team.Spectators, player);
 	}
 	
+	/**
+	 * Used when the Arena Ends.
+	 * 
+	 * @param player The Player we're having rejoin the Arena.
+	 */
 	public void rejoin(Player player) {
 		this.preferedteam.remove(player.getName());
 		this.leaveTeam(player);
@@ -355,6 +489,11 @@ public class Arena {
 		new Message(Config.playerAutoRejoin, this, player).send();
 	}
 	
+	/**
+	 * Used for having Players Leave.
+	 * 
+	 * @param player The Player we're having leave the Arena.
+	 */
 	public void leave(Player player) {
 		this.preferedteam.remove(player.getName());
 		this.leaveTeam(player);
@@ -375,6 +514,9 @@ public class Arena {
 		}
 	}
 	
+	/**
+	 * Go through all the PLayers and have them Leave the Arena.
+	 */
 	public void allPlayersLeave() {
 		for (GamePlayer gp:this.getGamePlayers()) {
 			Player player = gp.getPlayer();
@@ -386,6 +528,9 @@ public class Arena {
 		this.gamePlayers = new ArrayList<GamePlayer>();
 	}
 	
+	/**
+	 * Go through all the Players and have them Rejoin the Arena.
+	 */
 	public void allPlayersRejoin() {
 		for (GamePlayer gp:this.getGamePlayers()) {
 			this.rejoin(gp.getPlayer());
@@ -393,6 +538,11 @@ public class Arena {
 		}
 	}
 	
+	/**
+	 * Used for Having Players open their Class Selector based on their Team.
+	 * 
+	 * @param player The Player we're having Open their Class Selector.
+	 */
 	public void openClassSelector(Player player) {
 		switch (this.getTeam(player)) {
 		case Ducks:
@@ -407,6 +557,9 @@ public class Arena {
 		
 	}
 	
+	/**
+	 * Start the Game.
+	 */
 	public void startGame() {
 		this.splitIntoTeams();
 		for (Player player:this.getPlayers()) {
@@ -427,6 +580,9 @@ public class Arena {
 		this.startArenaClock();
 	}
 	
+	/**
+	 * Start Recruiting.
+	 */
 	public void startRecruiting() {
 		if (status == ArenaStatus.Recruiting) return;
 		status = ArenaStatus.Recruiting;
@@ -457,6 +613,9 @@ public class Arena {
 		Bukkit.getPluginManager().callEvent(e);
 	}
 
+	/**
+	 * Start the Countdown.
+	 */
 	public void startCountdown() {
 		if (status == ArenaStatus.Starting) return;
 		status = ArenaStatus.Starting;
@@ -502,6 +661,9 @@ public class Arena {
 		Bukkit.getPluginManager().callEvent(e);
 	}
 	
+	/**
+	 * Start the In-Game Arena Clock.
+	 */
 	public void startArenaClock() {
 		if (status == ArenaStatus.InGame) return;
 		status = ArenaStatus.InGame;
@@ -530,6 +692,9 @@ public class Arena {
 		Bukkit.getPluginManager().callEvent(e);
 	}
 	
+	/**
+	 *  Start Ending.
+	 */
 	public void startEnding() {
 		if (status == ArenaStatus.Ending) return;
 		status = ArenaStatus.Ending;
@@ -584,6 +749,9 @@ public class Arena {
 		Bukkit.getPluginManager().callEvent(e);
 	}
 	
+	/**
+	 * End the Arena.
+	 */
 	public void endGame() {
 		if (!Config.autoRejoin) this.allPlayersLeave();
 		else this.allPlayersRejoin();
@@ -594,6 +762,11 @@ public class Arena {
 		if (Config.bungeeEnabled && Config.bungeeRestartServerOnGameEnd) Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "restart"); 
 	}
 	
+	/**
+	 * Handles the Deaths of a Duck.
+	 * 
+	 * @param duck The GamePlayer that has been 'killed'.
+	 */
 	public void killDuck(GamePlayer duck) {
 		if (this.getTeam(duck.getPlayer())!=Team.Ducks) return;
 		int lives = this.getLives(duck.getPlayer());
@@ -621,6 +794,9 @@ public class Arena {
 		}
 	}
 	
+	/**
+	 * @param duck The GamePlayer who finished the Arena's Course.
+	 */
 	public void duckFinish(GamePlayer duck) {
 		this.broadcast(Config.duckFinishedCourse, Team.None, duck.getPlayer());
 		this.duckFinisher = duck.getPlayer().getName();
@@ -628,12 +804,18 @@ public class Arena {
 		this.startEnding();
 	}
 	
+	/**
+	 * Update the Scoreboard for all of the Players.
+	 */
 	private void updateScoreboard() {
 		for (Player player:getPlayers()) {
 			player.setScoreboard(new Board(this, player).getBoard());
 		}
 	}
 	
+	/**
+	 * Update the Actionbar for all of the Players.
+	 */
 	private void updateActionbar() {
 		switch (status) {
 		case Recruiting:
@@ -649,8 +831,12 @@ public class Arena {
 		}
 	}
 	
-	// Have player be null if you want to talk about the players we're broadcasting to.
-	// Have player be someone else if your talking about someone specific to everyone.
+	/**
+	 * 
+	 * @param message The Message to send to the Players.
+	 * @param team The Team of to Broadcast to. Set to Team.None if you want to talk to Every Player in the Arena regardless of Team.
+	 * @param player The Player the Message is About. Use null if you want to talk About the players we're broadcasting to instead of just one Specific Player.
+	 */
 	public void broadcast(String message, Team team, Player player) {
 		for (Player p : getPlayers()) {
 			if (this.getTeam(p)==team || team == Team.None) {
@@ -663,6 +849,10 @@ public class Arena {
 		}
 	}
 	
+	/**
+	 * @param player The Player we're getting the Team of.
+	 * @return The Team of the Player.
+	 */
 	public Team getTeam(Player player) {
 		if (this.ducks.contains(this.getGamePlayer(player))) return Team.Ducks;
 		if (this.hunters.contains(this.getGamePlayer(player))) return Team.Hunters;
@@ -670,49 +860,91 @@ public class Arena {
 		return Team.None;
 	}
 	
+	/**
+	 * @return A List of GamePlayers that are Ducks.
+	 */
 	public List<GamePlayer> getDucks() {
 		return ducks;
 	}
 
+	/**
+	 * @return A List of GamePlayers that are Hunters.
+	 */
 	public List<GamePlayer> getHunters() {
 		return hunters;
 	}
 
 
+	/**
+	 * @return A List of GamePlayers that are Spectators.
+	 */
 	public List<GamePlayer> getSpectators() {
 		return spectators;
 	}
 
+	/**
+	 * @return The Last Deceased Duck's Name.
+	 */
 	public String getLastDuckDeath() {
 		return lastDuckDeath;
 	}
 
+	/**
+	 * @return The Last Deceased Duck's Killer's Name.
+	 */
 	public String getLastDuckKiller() {
 		return lastDuckKiller;
 	}
 	
+	/**
+	 * @return The Latest Duck Finisher's Name.
+	 */
 	public String getDuckFinisher() {
 		return duckFinisher;
 	}
 	
+	/**
+	 * @param playerName The Player Name of the New Last Duck Death.
+	 */
 	public void setLastDuckDeath(String playerName) {
 		this.lastDuckDeath = playerName;
 	}
 	
+	/**
+	 * @param playerName The Player Name of the New Last Duck Killer.
+	 */
 	public void setLastDuckKiller(String playerName) {
 		this.lastDuckKiller = playerName;
 	}
 	
+	/**
+	 * @return The Winning Team.
+	 */
 	public Team getWinningTeam() {
 		return winningteam;
 	}
 	
+	/**
+	 * Re-Gets the Spawns from the Config.
+	 */
 	public void reloadConfig() {
 		this.duckSpawn = ArenaStorage.getSpawnLocation(this, Team.Ducks);
 		this.hunterSpawn = ArenaStorage.getSpawnLocation(this, Team.Hunters);
 		this.spectatorSpawn = ArenaStorage.getSpawnLocation(this, Team.Spectators);
 	}
 
+	/**
+	 * Initialize a New Arena.
+	 * 
+	 * @param name The Name of the Arena.
+	 * @param status The Status of the Arena.
+	 * @param minPlayers The Minimum Players needed for the Arena to Start.
+	 * @param maxPlayers The Maximum Players allowed at once in the Arena.
+	 * @param duckSpawn The Duck Spawn Location.
+	 * @param hunterSpawn The Hunter Spawn Location.
+	 * @param spectatorSpawn The Spectator Spawn Location. 
+	 * @param checkpoints The Checkpoints of the Arena.
+	 */
 	public Arena(String name, ArenaStatus status, int minPlayers, int maxPlayers, Location duckSpawn, Location hunterSpawn, Location spectatorSpawn, List<Location> checkpoints) {
 		this.name = name;
 		this.status = status;

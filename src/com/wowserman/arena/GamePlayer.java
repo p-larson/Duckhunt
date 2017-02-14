@@ -25,18 +25,30 @@ public class GamePlayer {
 	private Arena arena;
 	private Player player;
 	
+	/**
+	 * @return The Player assosiated with the GamePlayer instnace.
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 	
+	/**
+	 * @return The GameClassType of the GamePlayer.
+	 */
 	public GameClassType getType() {
 		return type;
 	}
 	
+	/**
+	 * @return The Arena the GamePlayer is assosiated with.
+	 */
 	public Arena getArena() {
 		return arena;
 	}
 	
+	/**
+	 * @return The rate of which the GamePlayer will be Refilled in Minecraft Ticks.
+	 */
 	private Double getRefillRate() {
 		switch (type) {
 		case Runner:
@@ -61,6 +73,10 @@ public class GamePlayer {
 		return 1d;
 	}
 	
+	/**
+	 * @param item The ItemStack we're getting the Count of.
+	 * @return the Count of Items the Player's Inventory has.
+	 */
 	public int getItemCount(ItemStack item) {
 		Material material = item.getType();
 		int amount = 0;
@@ -71,6 +87,9 @@ public class GamePlayer {
 		return amount;
 	}
 	
+	/**
+	 * @param item The ItemStack we're removing from the Player's Inventory.
+	 */
 	public void removeItem(ItemStack item) {
 		ItemStack[] items = player.getInventory().getContents();
 		int i = 0;
@@ -89,6 +108,9 @@ public class GamePlayer {
 		}
 	}
 	
+	/**
+	 * @param item The ItemStack we're removing all of in the Player's Inventory.
+	 */
 	public void removeAll(ItemStack item) {
 		Material material = item.getType();
 		ItemStack[] items = player.getInventory().getContents();
@@ -102,12 +124,15 @@ public class GamePlayer {
 		player.getInventory().setContents(items);
 	}
 	
-	public void spawnItem(ItemStack itemstack) {
+	/**
+	 * @param itemstack The ItemStack we're adding to the Player's Inventory.
+	 */
+	public void spawnItem(ItemStack item) {
 		ItemStack[] items = player.getInventory().getContents();
 		int i = 0;
 		for (ItemStack is:player.getInventory().getContents()) {
 			if (is==null || is.getType()==Material.AIR) {
-				items[i]=itemstack;
+				items[i]=item;
 				player.getInventory().setContents(items);
 				break;
 			}
@@ -115,6 +140,9 @@ public class GamePlayer {
 		}
 	}
 	
+	/**
+	 *  Remove the Item in the Player's Hand.
+	 */
 	public void removeItemInHand() { 
 		ItemStack[] items = player.getInventory().getContents();
 		int slot = player.getInventory().getHeldItemSlot();
@@ -122,6 +150,10 @@ public class GamePlayer {
 		player.getInventory().setContents(items);
 	}
 	
+	/**
+	 * @param itemstack The ItemStack we're adding to the Player's Inventory.
+	 * @param slot The Slot we're Adding the ItemStack to.
+	 */
 	public void spawnItem(ItemStack itemstack, int slot) {
 		ItemStack[] items = player.getInventory().getContents();
 		items[slot]=itemstack;
@@ -129,10 +161,17 @@ public class GamePlayer {
 		player.updateInventory();
 	}
 	
-	public void addItem(ItemStack itemstack) {
-		player.getInventory().addItem(itemstack);
+	/**
+	 * @param itemstack The ItemStack we're adding to the Player's Inventory.
+	 */
+	public void addItem(ItemStack item) {
+		player.getInventory().addItem(item);
 	}
 	
+	/**
+	 * @param range The Range of Blocks we're going to Look through.
+	 * @return The Block the Player is Looking at.
+	 */
 	public final Block getTargetBlock(int range) {
         BlockIterator iter = new BlockIterator(player, range);
         Block lastBlock = iter.next();
@@ -146,6 +185,11 @@ public class GamePlayer {
         return lastBlock;
     }
 	
+	/**
+	 * @param range The Range of Blocks we're going to Look through.
+	 * @param cantBe The Material we're going to ignore while iterating through the Blocks in the Player's Direction.
+	 * @return The Block the Player is Looking at.
+	 */
 	public final Block getTargetBlock(int range, Material cantBe) {
 		BlockIterator iter = new BlockIterator(player, range);
         Block block = iter.next();
@@ -169,17 +213,26 @@ public class GamePlayer {
         return block;
 	}
 	
+	/**
+	 * @return The Team Preference of the Player.
+	 */
 	public Team getTeamPreference() {
 		if (arena.getPreferedTeam(player)!=null) return arena.getPreferedTeam(player);
 		else return Team.None;
 	}
 	
+	/**
+	 * Reset the Player's Inventory.
+	 */
 	public void restoreInventory() {
 		player.getInventory().setContents(this.getInventory().getContents());
 		player.updateInventory();
 		player.setHealth(20);
 	}
 	
+	/**
+	 * @param type The GameClassType we're changing to.
+	 */
 	public void changeType(GameClassType type) {
 		switch (type) {
 		case Runner:
@@ -214,6 +267,9 @@ public class GamePlayer {
 		this.restoreInventory();
 	}
 	
+	/**
+	 * @return The Inventory based on the GameClassType of the Player.
+	 */
 	public Inventory getInventory() {
 		Inventory i = Bukkit.createInventory(null, InventoryType.PLAYER);
 		switch (type) {
@@ -266,16 +322,21 @@ public class GamePlayer {
 		return i;
 	}
 	
+	/**
+	 * Reset's Health.
+	 */
 	public void heal() {
 		player.setHealth(20);
 		player.setFoodLevel(20);
 	}
 	
-	// Only for Barragers
 	private boolean isShooting() {
 		return Barrager.isShooting(player);
 	}
 	
+	/**
+	 * Restocks the GamePlayer of items they may have used.
+	 */
 	public void refill() {
 		switch (type) {
 		case Runner:
@@ -349,6 +410,12 @@ public class GamePlayer {
 		}.runTaskTimer(Duckhunt.plugin, (long) (this.getRefillRate() * 20), (long) (this.getRefillRate() * 20));
 	}
 	
+	/**
+	 * Initialize a new GamePlayer.
+	 * 
+	 * @param arena The Arena the Player's in.
+	 * @param player The Player the GamePlayer is assosiated with.
+	 */
 	public GamePlayer(Arena arena, Player player) {
 		this.arena = arena;
 		this.player = player;

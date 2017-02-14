@@ -100,40 +100,64 @@ public class Duckhunt extends JavaPlugin {
 		else return Team.None;
 	}
 	
-
-	
+	/**
+	 * @param name The Arena's Name.
+	 * @return The Arena matching the Name. Returns Null if there isn't a Arena of that Name.
+	 */
 	public static Arena getArenaOfName(String name) {
 		for (Arena arena:arenas) 
 			if (arena.getName().equalsIgnoreCase(name)) return arena;
 		return null;
 	}
 	
+	/**
+	 * @return The Main Arena Declared by in the Config. Used for Bungeecord.
+	 */
 	public static Arena getMainArena() {
 		return Duckhunt.getArenaOfName(Config.mainArenaName);
 	}
 	
+	/**
+	 * @return The List of all of the BungeeArenas known.
+	 */
 	public static List<BungeeArena> getBungeeArenas() {
 		return bungeeArenas;
 	}
 	
+	/**
+	 * @param arenaName The Name of the BungeeArena.
+	 * @return The BungeeArena (Server) with a matching Arena Name. Returns Null if there isn't a BungeeArena of that Name.
+	 */
 	public static BungeeArena getBungeeArena(String arenaName) {
 		for (BungeeArena arena:bungeeArenas) 
 			if (arena.getArenaName().equalsIgnoreCase(arenaName)) return arena;
 		return null;
 	}
 	
+	/**
+	 * @param serverName The Server Name of the Bungee Arena.
+	 * @return The BungeeArena (Server) with a matching Server Name. Returns Null if there isn't a BungeeArena of that Server Name.
+	 */
 	public static BungeeArena getBungeeArenaOfServerName(String serverName) {
 		for (BungeeArena arena:bungeeArenas) 
 			if (arena.getServerName().equalsIgnoreCase(serverName)) return arena;
 		return new BungeeArena(serverName);
 	}
 	
+	/**
+	 * @param location The Location we're Checking.
+	 * @return True if there is a BungeeArenaSign with the same Location. False if there isn't a BungeeArenaSign with the Same Location.
+	 */
 	public static boolean isBungeeSign(Location location) {
 		for (BungeeArenaSign sign:bungeeSigns) 
 			if (Tools.isSameLocation(sign.getLocation(), location)) return true;
 		return false;
 	}
 	
+	/**
+	 * @param location The Location we're Checking.
+	 * @return True if there is a ArenaSign with the same Location. False if there isn't a ArenaSign with the Same Location.
+	 */
 	public static boolean isArenaSign(Location location) {
 		for (ArenaSign sign:arenaSigns) {
 			if (Tools.isSameLocation(sign.getLocation(), location)) return true;	
@@ -141,22 +165,48 @@ public class Duckhunt extends JavaPlugin {
 		return false;
 	}
 	
+	/**
+	 * @param location The Location we're Getting the Sign from.
+	 * @return The BungeeArenaSign matching the Location. Returns Null if there isn't a Sign at the Location.
+	 */
 	public static BungeeArenaSign getBungeeArenaSign(Location location) {
 		for (BungeeArenaSign sign:bungeeSigns) 
 			if (Tools.isSameLocation(sign.getLocation(), location)) return sign;
 		return null;
 	}
 	
+	/**
+	 * @param location The Location we're Getting the Sign from.
+	 * @return The ArenaSign matching the Location. Returns Null if there isn't a Sign at the Location.
+	 */
 	public static ArenaSign getArenaSign(Location location) {
 		for (ArenaSign sign:arenaSigns) 
 			if (Tools.isSameLocation(sign.getLocation(), location)) return sign;
 		return null;
 	}
 	
+	/**
+	 * @param sign The Sign we're Checking.
+	 * @return True if the Sign is a Leave Sign, False if its not.
+	 */
 	public static boolean isLeaveSign(ArenaSign sign) {
 		return sign.isLeaveSign();
 	}
 	
+	
+	/* 
+	 * Load Up Everything.
+	 * - Initialize the Plugin instance.
+	 * - Initialize a new Config Instance.
+	 * - Initialize a new ArenaStorage Instance.
+	 * - Initialize a new BookStorage Instance.
+	 * - Initialize a new SignStorage Instance.
+	 * - Initialize a new BungeeCommunication Instance.
+	 * - Load every Arena from the Arena Storage.
+	 * - Load every Arena up, Start Recruiting.
+	 * - Load every Sign after the Server has loaded all of its Plugins to make sure all worlds have been loaded.
+	 * - Register all of the Listeners used.
+	 */
 	@Override
 	public void onEnable() {
 		Duckhunt.plugin = this;
@@ -237,6 +287,9 @@ public class Duckhunt extends JavaPlugin {
 		System.out.print("                                                     ");
 	}
 	
+	/*
+	 * Removes and shuts off anything needed before the Server Stops.
+	 */
 	public void onDisable() {
 		System.out.print("Thank you for Downloading Duckhunt.");
 		for (Arena arena:arenas) arena.allPlayersLeave();
